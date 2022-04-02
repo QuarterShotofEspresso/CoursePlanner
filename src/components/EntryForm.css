@@ -1,0 +1,57 @@
+.course-list-form-cont{
+    display: flex;
+    justify-content: space-between;
+    width: 412px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input-text {
+    font-family: "Courier New", "Lucida Grande";
+    font-weight: bold;
+}
+
+.dbg-console{
+    color: black;
+    background-color: lightgray;
+    border-color: lightgray;
+}
+
+.tut-msg{
+    font-family: Helvetica;
+}
+
+.vskip-50px{
+    height: 50px;
+}
+
+.vskip-20px{
+    height: 20px;
+}
+
+.vskip-15px{
+    height: 15px;
+}
+
+.vskip-10px{
+    height: 10px;
+}
+
+.vskip-5px{
+    height: 5px;
+}
+
+.content{
+    display: flex;
+    max-width: 412px;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: auto;
+    margin-left: auto;
+    font-family: Helvetica;
+}
+
+button{
+    font-family: "Courier New";
+    font-weight: bold;
+}

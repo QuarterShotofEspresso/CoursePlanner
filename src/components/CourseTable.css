@@ -1,4 +1,23 @@
 .course-table{
     margin-left: auto;
     margin-right: auto;
+    font-family: "Helvetica";
+    width: 412px;
+}
+
+tbody{
+    font-family: "Courier New";
+    font-weight: normal;
+}
+
+.prereq-td{
+    text-align: left;
+}
+
+.prereq-div{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
 }

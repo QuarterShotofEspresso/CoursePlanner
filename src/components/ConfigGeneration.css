@@ -1,0 +1,27 @@
+.text-mcl{
+    font-family: "Courier New";
+    font-weight: bold;
+}
+
+.white-space-cg-1{
+    height: 10px;
+}
+
+.content{
+    display: flex;
+    max-width: 412px;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: auto;
+    margin-left: auto;
+    font-family: Helvetica;
+}
+
+.parent-content{
+
+}
+
+.config-buttons{
+    font-family: "Courier New";
+    font-weight: bold;
+}

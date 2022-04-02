@@ -1,12 +1,12 @@
-
+import './Dbg.css'
 
 const Intro = () => {
 
     return (
-        <div>
-            <h1>Hi there!</h1><br/>
-            <p> Need some help?</p><br/>
-            <p>Have concerns/ideas?</p><br/>
+        <div className={'dbg-border'}>
+            <h1 className={'welcome-text dbg-border'}>Hi there!</h1><br/>
+            <p className={'help-text dbg-border'}>Need some help?</p><br/>
+            <p className={'concern-text dbg-border'}>Have concerns/ideas?</p><br/>
         </div>
     )
 }
