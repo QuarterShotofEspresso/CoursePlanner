@@ -46,7 +46,7 @@ const EntryForm = ({courseListMatrix, setCourseListMatrix, userFormData, setUser
             } else if (capturedCourse = userEntry.match(courseCapture_4)) {
                 newCourseData.cid = capturedCourse[1];
             } else {
-                setDbgMsg("Da fuq u doing bitch ass mf?");
+                setDbgMsg("Improper format. Use: <CID>[; <PREREQS>[; <OFFERINGS>[; <LOAD>]]]");
                 return;
             }
 
