@@ -12,9 +12,12 @@
 }
 
 .dbg-console{
-    color: black;
+    color: red;
     background-color: lightgray;
-    border-color: lightgray;
+    border-style: solid;
+    border-color: darkgray;
+    border-width: 1px;
+    border-radius: 2px;
 }
 
 .tut-msg{

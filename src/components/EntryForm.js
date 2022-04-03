@@ -3,44 +3,71 @@ import {useState} from "react";
 
 const EntryForm = ({courseListMatrix, setCourseListMatrix}) => {
 
-    const [courses, setCourses] = useState([]);
-    const [dbgMsg, setDbgMsg] = useState("No issues.");
+    // const [courses, setCourses] = useState([]);
+    const [dbgMsg, setDbgMsg] = useState("");
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
 
             if(event.target.value === "") {
-                setDbgMsg("There's no course!");
+                setDbgMsg("");
                 return;
             }
 
             // courseCaptureRegex Accepts following format:
             // <CID: String>; <Load: Float>; <Offering: [FWSU]>; <Prereqs: String>
             // e.g. CS010C; 1.5; FWSU; CS010B CS011
-            const courseCaptureRegex = /\s*(.+);\s+(\d+\.\d*|\d+);\s+([FWSU]{1,4});\s*(.*)/;
-            const capturedCourse = event.target.value.match(courseCaptureRegex);
+            const courseCapture_1 = /^\s*([0-9A-Za-z]+);\s*(\d+\.\d*|\d+);\s*([FWSU]{1,4});\s*(.*)$/;
+            const courseCapture_2 = /^\s*([0-9A-Za-z]+);\s*(\d+\.\d*|\d+);\s*([FWSU]{1,4})$/;
+            const courseCapture_3 = /^\s*([0-9A-Za-z]+);\s*(\d+\.\d*|\d+)$/;
+            const courseCapture_4 = /^\s*([0-9A-Za-z]+)$/;
 
-            if(capturedCourse === null) {
-                setDbgMsg(`Format is incorrect.`);
+            let capturedCourse;
+            let newCourseData = {cid: "", load: 1, offer: "FWSU", prereq: []};
+            if(capturedCourse = event.target.value.match(courseCapture_1)) {
+                newCourseData.cid = capturedCourse[1];
+                newCourseData.load = parseFloat(capturedCourse[2]);
+                newCourseData.offer = capturedCourse[3];
+                newCourseData.prereq = capturedCourse[4].split(' ');
+            } else if (capturedCourse = event.target.value.match(courseCapture_2)) {
+                newCourseData.cid = capturedCourse[1];
+                newCourseData.load = parseFloat(capturedCourse[2]);
+                newCourseData.offer = capturedCourse[3];
+            } else if (capturedCourse = event.target.value.match(courseCapture_3)) {
+                newCourseData.cid = capturedCourse[1];
+                newCourseData.load = parseFloat(capturedCourse[2]);
+            } else if (capturedCourse = event.target.value.match(courseCapture_4)) {
+                newCourseData.cid = capturedCourse[1];
+            } else {
+                setDbgMsg("Da fuq u doing bitch ass mf?");
                 return;
             }
 
-            if(courses.includes(capturedCourse[1])) {
-                setDbgMsg(`'${capturedCourse[1]}' has already been added.`);
-                return;
-            }
+            // if(capturedCourse === null) {
+            //     setDbgMsg(`Format is incorrect.`);
+            //     return;
+            // }
 
-            const newCourse = [
-                capturedCourse[1],
-                parseFloat(capturedCourse[2]),
-                capturedCourse[3],
-                capturedCourse[4].split(' ')
-            ];
+            // if(courses.includes(capturedCourse[1])) {
+            //     setDbgMsg(`'${capturedCourse[1]}' has already been added.`);
+            //     return;
+            // }
+
+            const newCourse = {
+                courseData: newCourseData,
+                selectionData: {
+                    selected: false,
+                    highlight: "white"
+                }
+            };
+
+            // console.log(newCourse);
+            // console.log([...courseListMatrix, newCourse]);
 
             setCourseListMatrix([...courseListMatrix, newCourse]);
-            setCourses([...courses, capturedCourse[1]]);
+            // setCourses([...courses, capturedCourse[1]]);
 
-            setDbgMsg("No issues.");
+            setDbgMsg("");
             event.target.value = '';
 
         }
@@ -48,11 +75,6 @@ const EntryForm = ({courseListMatrix, setCourseListMatrix}) => {
 
     return (
         <div className={'dbg-border'}>
-            <div className={'vskip-50px'}/>
-            <div className={'dbg-border tut-msg'}>
-                <a href={"https://example.com"} target="_blank" rel="noopener noreferrer">How to Use this Tool</a> <br/>
-            </div>
-            <div className={'vskip-20px'}/>
             <div className={'course-list-form-cont'}>
                 <input type={'text'} className={'input-text'} placeholder={"CS010C; 1; FWSU; CS010B CS011"}
                        size={43} onKeyDown={handleKeyDown}
@@ -76,8 +98,9 @@ const EntryForm = ({courseListMatrix, setCourseListMatrix}) => {
                 </div>
                 <button>PLAN</button>
             </div>
-            <div className={'vskip-15px'}/>
-            <input type={'text'} className={'input-text dbg-console'}  value={dbgMsg} size={50} readOnly/>
+            <div className={'vskip-5px'}/>
+            <input type={'text'} className={'input-text dbg-console'}  placeholder={"No issues."} value={dbgMsg}
+                   size={50} readOnly/>
         </div>
     );
 }

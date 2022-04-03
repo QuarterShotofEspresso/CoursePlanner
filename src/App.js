@@ -17,15 +17,18 @@ import {useState} from "react";
 
 function App() {
 
-    const [courseListMatrix, setCourseListMatrix] = useState(
-        []
-    );
+    const [courseListMatrix, setCourseListMatrix] = useState([]);
 
     return (
         <div className="App">
+            <div className={'vskip-50px'}/>
+            <div className={'dbg-border tut-msg'}>
+                <a href={"https://example.com"} target="_blank" rel="noopener noreferrer">Tutorial</a> <br/>
+            </div>
+            <div className={'vskip-20px'}/>
             <EntryForm courseListMatrix={courseListMatrix} setCourseListMatrix={setCourseListMatrix}/>
             <div className={'vskip-15px'}/>
-            <CourseTable courseListMatrix={courseListMatrix}/>
+            <CourseTable courseListMatrix={courseListMatrix} setCourseListMatrix={setCourseListMatrix}/>
         </div>
     );
 }

@@ -3,10 +3,28 @@ import './CourseTable.css'
 import {useState} from "react";
 // import data from './mock-data.json'
 
-// class CourseTable extends ReactComponent {
-const CourseTable = ({courseListMatrix}) => {
+const CourseTable = ({courseListMatrix, setCourseListMatrix}) => {
 
-    // const [list, setList] = useState(data);
+    const handleRowClick = (event) => {
+
+        const selectedRowIdx = event.target.parentNode.rowIndex - 1;
+        // get the new select state and highlight property from the previous state
+        const newSelectState = !courseListMatrix[selectedRowIdx].selectionData.selected;
+        const newHighlightProp = newSelectState ? "lightblue" : "white";
+        // create a copy
+        const selectedCourseList = [...courseListMatrix];
+        // update the copy with new data
+        selectedCourseList[selectedRowIdx] = {
+            ...selectedCourseList[selectedRowIdx],
+            selectionData: {
+                selected: newSelectState,
+                highlight: newHighlightProp
+            }
+        };
+        // save it
+        setCourseListMatrix(selectedCourseList);
+
+    }
 
     return (
         <div>
@@ -21,14 +39,12 @@ const CourseTable = ({courseListMatrix}) => {
                 </thead>
                 <tbody>
                 {courseListMatrix.map((course) => (
-                    <tr>
-                        <td>{course[0]}</td>
-                        <td>{course[1]}</td>
-                        <td>{course[2]}</td>
+                    <tr style={{"backgroundColor": course.selectionData.highlight}} onClick={handleRowClick}>
+                        <td>{course.courseData.cid}</td>
+                        <td>{course.courseData.load}</td>
+                        <td>{course.courseData.offer}</td>
                         <td className={'prereq-td'}>
-                            <div className={'prereq-div'}>
-                                {course[3].join(' ')}
-                            </div>
+                            {course.courseData.prereq.join(' ')}
                         </td>
                     </tr>
                 ))}
