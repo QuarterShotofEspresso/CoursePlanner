@@ -17,7 +17,7 @@ import {useState} from "react";
 
 function App() {
 
-    const [courseListMatrix, setCourseListMatrix] = useState([]);
+    const [courseList, setCourseList] = useState([]);
     const [userFormData, setUserFormData] = useState("");
 
     return (
@@ -27,11 +27,11 @@ function App() {
                 <a href={"https://example.com"} target="_blank" rel="noopener noreferrer">Tutorial</a> <br/>
             </div>
             <div className={'vskip-20px'}/>
-            <EntryForm courseListMatrix={courseListMatrix} setCourseListMatrix={setCourseListMatrix}
+            <EntryForm courseListMatrix={courseList} setCourseListMatrix={setCourseList}
                        userFormData={userFormData} setUserFormData={setUserFormData}
             />
             <div className={'vskip-15px'}/>
-            <CourseTable courseListMatrix={courseListMatrix} setCourseListMatrix={setCourseListMatrix}
+            <CourseTable courseListMatrix={courseList} setCourseListMatrix={setCourseList}
                          setUserFormData={setUserFormData}
             />
         </div>

@@ -6,6 +6,43 @@ const EntryForm = ({courseListMatrix, setCourseListMatrix, userFormData, setUser
     // const [courses, setCourses] = useState([]);
     const [dbgMsg, setDbgMsg] = useState("");
 
+    function extractCourseDataFromCourseList() {
+        const extractedCourseData = courseListMatrix.map(course => {
+            return course.courseData;
+        });
+
+        return JSON.stringify(extractedCourseData);
+    }
+
+    // function convertSSVToCourseList() {
+    //     // TODO: Complete Me!!
+    // }
+
+    const handleJSONExport = (event) => {
+        // Referenced from: https://theroadtoenterprise.com/blog/how-to-download-csv-and-json-files-in-react [
+        // Create a blob with the data we want to download as a file
+        if(courseListMatrix.length === 0) {
+            setDbgMsg("There's no fucking classes to download bitch.");
+            return;
+        }
+
+        const coursesAsJSON = extractCourseDataFromCourseList();
+        const blob = new Blob([coursesAsJSON], { type: "text/json" })
+        // Create an anchor element and dispatch a click event on it
+        // to trigger a download
+        const a = document.createElement('a')
+        a.download = "courses.json"
+        a.href = window.URL.createObjectURL(blob)
+        const clickEvt = new MouseEvent('click', {
+            view: window,
+            bubbles: true,
+            cancelable: true,
+        })
+        a.dispatchEvent(clickEvt)
+        a.remove()
+        // ]
+    }
+
     const handleChange = (event) => {
         setUserFormData(event.target.value);
     }
@@ -72,7 +109,7 @@ const EntryForm = ({courseListMatrix, setCourseListMatrix, userFormData, setUser
                 <input type={'text'} className={'input-text'} placeholder={"e.g. CS010C; CS010B CS011; FWSU; 1.5"}
                        size={43} onKeyDown={handleKeyDown} onChange={handleChange} value={userFormData}
                 />
-                <button>LIST</button>
+                <button onClick={handleJSONExport}>JSON</button>
             </div>
             <div className={'vskip-5px'}/>
             <div className={'content dbg-border'}>
