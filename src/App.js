@@ -19,6 +19,11 @@ function App() {
 
     const [courseList, setCourseList] = useState([]);
     const [userFormData, setUserFormData] = useState("");
+    const [dbgMsg, setDbgMsg] = useState("");
+
+    function clearCourseList() {
+        setCourseList(courseList.filter(() => false));
+    }
 
     return (
         <div className="App">
@@ -27,8 +32,9 @@ function App() {
                 <a href={"https://example.com"} target="_blank" rel="noopener noreferrer">Tutorial</a> <br/>
             </div>
             <div className={'vskip-20px'}/>
-            <EntryForm courseListMatrix={courseList} setCourseListMatrix={setCourseList}
+            <EntryForm courseList={courseList} setCourseList={setCourseList}
                        userFormData={userFormData} setUserFormData={setUserFormData}
+                       dbgMsg={dbgMsg} setDbgMsg={setDbgMsg}
             />
             <div className={'vskip-15px'}/>
             <CourseTable courseListMatrix={courseList} setCourseListMatrix={setCourseList}

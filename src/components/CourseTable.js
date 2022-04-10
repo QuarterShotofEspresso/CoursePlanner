@@ -11,7 +11,7 @@ const CourseTable = ({courseListMatrix, setCourseListMatrix, setUserFormData}) =
         if(event.key === 'Delete' || event.key === 'Backspace') {
             setLastSelectedRow(-1); // reset lastSelectedRow
             deleteSelectedCoursesFromMatrix();
-            setUserFormData(""); // clear entry form
+            // setUserFormData(""); // clear entry form
         }
     }
 
@@ -19,6 +19,15 @@ const CourseTable = ({courseListMatrix, setCourseListMatrix, setUserFormData}) =
         const selectedRowIdx = event.target.parentNode.rowIndex - 1;
         toggleRowSelectionAndHighlight(selectedRowIdx);
         fillEntryFormWithSelectedRowData(selectedRowIdx);
+        emptyEntryForm(selectedRowIdx);
+    }
+
+    function emptyEntryForm(selectedRowIdx) {
+        const prevRowIdx = lastSelectedRow;
+        const currRowIdx = !courseListMatrix[selectedRowIdx].selectionData.selected ? selectedRowIdx : lastSelectedRow;
+        if(prevRowIdx === currRowIdx) {
+            setUserFormData("");
+        }
     }
 
     function deleteSelectedCoursesFromMatrix() {
