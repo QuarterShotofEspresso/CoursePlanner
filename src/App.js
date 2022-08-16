@@ -1,19 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import CourseTable from './components/CourseTable'
 import EntryForm from './components/EntryForm'
 import CoursePlan from './components/CoursePlan'
-// import data from './components/mock-data.json'
 import {useState} from "react";
 import {createCourse} from "./components/courseplan_utils";
-
-
-// TODO: A whole lot of shit baby
-//  - LIST downloads a file
-//  - PLAN copys the plan to clipboard
-//  - When there's an error with parsing the result, load succsessfully parsed data leave everything else empty
-//  - Accept a URL for the couselist
-//  - AVAIL 2FW0 3SU5 1U <= delfault assume 0 availability
 
 function App() {
 

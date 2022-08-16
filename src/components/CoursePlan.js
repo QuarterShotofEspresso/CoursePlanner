@@ -1,7 +1,4 @@
 import './EntryForm.css';
-import {useState} from "react";
-import EntryForm from "./EntryForm";
-import {CoursePlanner} from "./courseplan_utils";
 
 const CoursePlan = ({courselist, cpSig, setCpSig, coursePlanTableData, setCoursePlanTableData}) => {
 

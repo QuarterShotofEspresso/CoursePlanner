@@ -10,7 +10,7 @@ const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfD
 
     const handleScramble = () => {
         const scrambledCourseList = util.scrambleCourseList(courselist);
-        setCourselist(util.moveSeedCoursesToTop(scrambledCourseList));
+        setCourselist(scrambledCourseList)
     }
 
     const handleJSONExport = () => {
@@ -19,7 +19,7 @@ const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfD
             return;
         }
 
-        const coursesAsJSON = util.extractCourseDataFromCourseList(courselist);
+        const coursesAsJSON = JSON.stringify(courselist);
         util.downloadCourseDataAsJSON(coursesAsJSON);
     }
 
@@ -57,20 +57,20 @@ const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfD
         <div className={'dbg-border'}>
             <div className={'course-list-form-cont'}>
                 <input type={'text'} className={'ef-text'} id={'ef-cid'} placeholder={"CS010C"}
-                       size={8} onKeyDown={handleKeyDown} onChange={e => setEfData({...efData, cid: e.target.value})}
-                       value={efData.cid}
+                       size={8} onKeyDown={handleKeyDown} value={efData.cid}
+                       onChange={e => setEfData({...efData, cid: e.target.value.toUpperCase()})}
                 />
                 <input type={'text'} className={'ef-text'} id={'ef-preq'} placeholder={"CS010B CS011"}
-                       size={21} onKeyDown={handleKeyDown} onChange={e => setEfData({...efData, preq: e.target.value})}
-                       value={efData.preq}
+                       size={21} onKeyDown={handleKeyDown} value={efData.preq}
+                       onChange={e => setEfData({...efData, preq: e.target.value.toUpperCase()})}
                 />
                 <input type={'text'} className={'ef-text'} id={'ef-offr'} placeholder={"FWS"}
-                       size={4} onKeyDown={handleKeyDown} onChange={e => setEfData({...efData, offr: e.target.value})}
-                       value={efData.offr}
+                       size={4} onKeyDown={handleKeyDown} value={efData.offr}
+                       onChange={e => setEfData({...efData, offr: e.target.value.toUpperCase()})}
                 />
                 <input type={'text'} className={'ef-text'} id={'ef-load'} placeholder={"1.5"}
-                       size={4} onKeyDown={handleKeyDown} onChange={e => setEfData({...efData, load: e.target.value})}
-                       value={efData.load}
+                       size={4} onKeyDown={handleKeyDown} value={efData.load}
+                       onChange={e => setEfData({...efData, load: e.target.value.toUpperCase()})}
                 />
                 <button onClick={handleJSONExport}>JSON</button>
             </div>

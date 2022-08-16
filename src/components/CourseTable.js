@@ -1,7 +1,5 @@
 // import {ReactComponent} from "*.svg";
 import './CourseTable.css'
-import {useState} from "react";
-import {clear} from "@testing-library/user-event/dist/clear";
 // import data from './mock-data.json'
 
 const CourseTable = ({courselist, setCourselist, efData, setEfData}) => {
