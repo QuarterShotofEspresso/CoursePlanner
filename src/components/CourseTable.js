@@ -1,74 +1,46 @@
 // import {ReactComponent} from "*.svg";
 import './CourseTable.css'
 import {useState} from "react";
+import {clear} from "@testing-library/user-event/dist/clear";
 // import data from './mock-data.json'
 
-const CourseTable = ({courseListMatrix, setCourseListMatrix, setUserFormData}) => {
+const CourseTable = ({courselist, setCourselist, efData, setEfData}) => {
 
-    const [lastSelectedRow, setLastSelectedRow] = useState(-1);
-
-    const handleDeleteKey = (event) => {
+    const handleDeleteSelectedCourses = (event) => {
         if(event.key === 'Delete' || event.key === 'Backspace') {
-            setLastSelectedRow(-1); // reset lastSelectedRow
-            deleteSelectedCoursesFromMatrix();
-            // setUserFormData(""); // clear entry form
+            // filter off selected courses
+            const updatedCourseListMatrix = courselist.filter(
+                (course) => {return !course.selected}
+            )
+            setCourselist(updatedCourseListMatrix)
+            setEfData({cid: '', preq: '', offr: '', load: ''})
         }
     }
 
-    const handleRowClick = (event) => {
+    const handleCourseSelect = (event) => {
         const selectedRowIdx = event.target.parentNode.rowIndex - 1;
-        toggleRowSelectionAndHighlight(selectedRowIdx);
-        fillEntryFormWithSelectedRowData(selectedRowIdx);
-        emptyEntryForm(selectedRowIdx);
-    }
-
-    function emptyEntryForm(selectedRowIdx) {
-        const prevRowIdx = lastSelectedRow;
-        const currRowIdx = !courseListMatrix[selectedRowIdx].selectionData.selected ? selectedRowIdx : lastSelectedRow;
-        if(prevRowIdx === currRowIdx) {
-            setUserFormData("");
+        // toggle the selected row's highlight
+        // NOTE: Currently a terrible way to force re-render
+        const courseIsSelected = courselist[selectedRowIdx].toggleSelection();
+        setCourselist([...courselist])
+        // send the selected course's details to the entry form if a course has been selected
+        if (courseIsSelected) {
+            setEfData({
+                ...efData,
+                cid: courselist[selectedRowIdx].cid,
+                preq: courselist[selectedRowIdx].preq.join(' '),
+                offr: courselist[selectedRowIdx].offr,
+                load: courselist[selectedRowIdx].load
+            })
+        } else {
+            setEfData({cid: '', preq: '', offr: '', load: ''})
         }
-    }
-
-    function deleteSelectedCoursesFromMatrix() {
-        const updatedCourseListMatrix = courseListMatrix.filter(
-            (course) => {return !course.selectionData.selected;}
-        );
-
-        setCourseListMatrix(updatedCourseListMatrix);
-    }
-
-    function fillEntryFormWithSelectedRowData(selectedRowIdx) {
-        const prevRowIdx = lastSelectedRow;
-        const currRowIdx = !courseListMatrix[selectedRowIdx].selectionData.selected ? selectedRowIdx : lastSelectedRow;
-        if(prevRowIdx !== currRowIdx) {
-            setUserFormData(
-                `${courseListMatrix[currRowIdx].courseData.cid}; ${courseListMatrix[currRowIdx].courseData.prereq.join(' ')}; ${courseListMatrix[currRowIdx].courseData.offer}; ${courseListMatrix[currRowIdx].courseData.load}`);
-        }
-        setLastSelectedRow(currRowIdx);
-    }
-
-    function toggleRowSelectionAndHighlight(selectedRowIdx) {
-        // get the new select state and highlight property from the previous state
-        const newSelectState = !courseListMatrix[selectedRowIdx].selectionData.selected;
-        const newHighlightProp = newSelectState ? "lightblue" : "white";
-        // create a copy
-        const selectedCourseList = [...courseListMatrix];
-        // update the copy with new data
-        selectedCourseList[selectedRowIdx] = {
-            ...selectedCourseList[selectedRowIdx],
-            selectionData: {
-                selected: newSelectState,
-                highlight: newHighlightProp
-            }
-        };
-
-        setCourseListMatrix(selectedCourseList);
     }
 
     return (
         <div>
             <table className={"course-table"} border={'1'}>
+                <caption>Course Table</caption>
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -78,16 +50,16 @@ const CourseTable = ({courseListMatrix, setCourseListMatrix, setUserFormData}) =
                     </tr>
                 </thead>
                 <tbody>
-                {courseListMatrix.map((course) => (
-                    <tr style={{"backgroundColor": course.selectionData.highlight}} onClick={handleRowClick}
-                        onKeyDown={handleDeleteKey} tabIndex={0}
+                {courselist.map((course) => (
+                    <tr style={{"backgroundColor": course.getSelectionColor()}} onClick={handleCourseSelect}
+                        onKeyDown={handleDeleteSelectedCourses} tabIndex={0}
                     >
-                        <td>{course.courseData.cid}</td>
+                        <td>{course.cid}</td>
                         <td className={'prereq-td'}>
-                            {course.courseData.prereq.join(' ')}
+                            {course.preq.join(' ')}
                         </td>
-                        <td>{course.courseData.offer}</td>
-                        <td>{course.courseData.load}</td>
+                        <td>{course.offr}</td>
+                        <td>{course.load}</td>
                     </tr>
                 ))}
                 </tbody>

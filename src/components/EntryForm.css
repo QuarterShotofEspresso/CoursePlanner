@@ -6,9 +6,13 @@
     margin-right: auto;
 }
 
-.input-text {
+.ef-text {
     font-family: "Courier New", "Lucida Grande";
     font-weight: bold;
+}
+
+.ef-plan {
+    background-color: lightgreen;
 }
 
 .dbg-console{

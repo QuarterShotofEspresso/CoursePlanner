@@ -1,73 +1,76 @@
 import './EntryForm.css';
 import * as util from "./help_entryform";
+import {createCourse, createCoursePlanner} from './courseplan_utils'
 import {useState} from "react";
 
-const EntryForm = ({courseList, setCourseList, userFormData, setUserFormData, dbgMsg, setDbgMsg}) => {
+const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfData,
+                       coursePlanTableData, setCoursePlanTableData}) => {
 
     const [disablePlanButton, setDisablePlanButton] = useState(false);
 
     const handleScramble = () => {
-        const scrambledCourseList = util.scrambleCourseList(courseList);
-        setCourseList(util.moveSeedCoursesToTop(scrambledCourseList));
+        const scrambledCourseList = util.scrambleCourseList(courselist);
+        setCourselist(util.moveSeedCoursesToTop(scrambledCourseList));
     }
 
     const handleJSONExport = () => {
-        if(courseList.length === 0) {
-            setDbgMsg("There's no fucking classes to download bitch.");
+        if(courselist.length === 0) {
+            setDbgMsg("No classes loaded in Course Table.");
             return;
         }
 
-        const coursesAsJSON = util.extractCourseDataFromCourseList(courseList);
+        const coursesAsJSON = util.extractCourseDataFromCourseList(courselist);
         util.downloadCourseDataAsJSON(coursesAsJSON);
     }
 
     const handleKeyDown = (event) => {
         if (event.key !== 'Enter') return;
 
-        const userEntry = event.target.value;
-        if(userEntry === "") {
-            setDbgMsg("");
+        // verify collected data is valid
+        if(efData.cid === '') {
+            setDbgMsg('');
             return;
         }
 
-        const newCourseData = util.createCourseFromString(userEntry);
-        if (newCourseData.cid === "") {
-            setDbgMsg("Improper format. Use: <CID>[; <PREREQS>[; <OFFERINGS>[; <LOAD>]]]");
-            return;
-        }
+        let newCourse = createCourse(efData.cid, efData.preq, efData.offr, efData.load)
+        setCourselist([newCourse, ...courselist])
 
-        const newCourse = {
-            courseData: newCourseData,
-            selectionData: {
-                selected: false,
-                highlight: "white"
-            }
-        };
-
-        if(newCourse.courseData.prereq[0] === "" || newCourse.courseData.prereq.length === 0) {
-            setCourseList([newCourse, ...courseList]);
-        } else {
-            setCourseList([...courseList, newCourse]);
-        }
-
-        setDbgMsg("");
-        setUserFormData("");
+        setDbgMsg('');
+        setEfData({cid: '', preq: '', offr: '', load: ''})
     }
 
-    const handlePlan = (event) => {
-        setDisablePlanButton(true);
-        // Create course plan
 
-        // Finish creating plan
+    const handlePlan = () => {
+        // disable the PLAN button while developing the plan
+        setDisablePlanButton(true);
+        let myCoursePlanner = createCoursePlanner()
+        for (let course of courselist) {
+            course.preqsAdded = 0
+        }
+        let tableString = myCoursePlanner.generateCoursePlan(courselist)
+        setCoursePlanTableData(tableString)
+        // re-enable the PLAN button once the plan has been displayed
         setDisablePlanButton(false);
     }
 
     return (
         <div className={'dbg-border'}>
             <div className={'course-list-form-cont'}>
-                <input type={'text'} className={'input-text'} placeholder={"e.g. CS010C; CS010B CS011; FWSU; 1.5"}
-                       size={43} onKeyDown={handleKeyDown} onChange={e => setUserFormData(e.target.value)}
-                       value={userFormData}
+                <input type={'text'} className={'ef-text'} id={'ef-cid'} placeholder={"CS010C"}
+                       size={8} onKeyDown={handleKeyDown} onChange={e => setEfData({...efData, cid: e.target.value})}
+                       value={efData.cid}
+                />
+                <input type={'text'} className={'ef-text'} id={'ef-preq'} placeholder={"CS010B CS011"}
+                       size={21} onKeyDown={handleKeyDown} onChange={e => setEfData({...efData, preq: e.target.value})}
+                       value={efData.preq}
+                />
+                <input type={'text'} className={'ef-text'} id={'ef-offr'} placeholder={"FWS"}
+                       size={4} onKeyDown={handleKeyDown} onChange={e => setEfData({...efData, offr: e.target.value})}
+                       value={efData.offr}
+                />
+                <input type={'text'} className={'ef-text'} id={'ef-load'} placeholder={"1.5"}
+                       size={4} onKeyDown={handleKeyDown} onChange={e => setEfData({...efData, load: e.target.value})}
+                       value={efData.load}
                 />
                 <button onClick={handleJSONExport}>JSON</button>
             </div>
@@ -79,17 +82,13 @@ const EntryForm = ({courseList, setCourseList, userFormData, setUserFormData, db
                     <label>Summer</label>
                 </div>
                 <div>
-                    <input type={'checkbox'}/>
-                    <label>Train</label>
+                    <input type={'text'} className={'ef-text'} placeholder={'4'} size={2}/>
+                    <label>Max Load/Quarter</label>
                 </div>
-                <div>
-                    <input type={'text'} className={'input-text'} placeholder={'MAX'} size={4}/>
-                    <label>L/Q</label>
-                </div>
-                <button disabled={disablePlanButton} onClick={handlePlan}>PLAN</button>
+                <button className={'ef-plan'} disabled={disablePlanButton} onClick={handlePlan}>PLAN</button>
             </div>
             <div className={'vskip-5px'}/>
-            <input type={'text'} className={'input-text dbg-console'}  placeholder={"No issues."} value={dbgMsg}
+            <input type={'text'} className={'ef-text dbg-console'}  placeholder={"No issues."} value={dbgMsg}
                    size={50} readOnly
             />
         </div>
