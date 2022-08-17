@@ -79,10 +79,10 @@ const Quarter = {
     }
 }
 
-function createQuarter() {
+function createQuarter(maxLoad=4) {
     let newQuarter = Object.create(Quarter)
     newQuarter.courses = []
-    newQuarter.currentLoad = 4
+    newQuarter.currentLoad = maxLoad
 
     return newQuarter
 }
@@ -91,6 +91,8 @@ function createQuarter() {
 const CoursePlanner = {
     quarters: [],
     sortedCourses: [],
+    maxLoad: 4,
+    useSummer: false,
 
     generateCoursePlan: function (courselist) {
         // copy and sort all courses
@@ -114,7 +116,7 @@ const CoursePlanner = {
         // quarters, or 'years'
         let years = [], i = 0, n = this.quarters.length;
         while (i < n) {
-            years.push(this.quarters.slice(i, i += 4))
+            years.push(this.quarters.slice(i, i += this.calcTotalUsableTerms()))
         }
 
         years = years.map((year) => {
@@ -181,7 +183,7 @@ const CoursePlanner = {
     },
 
     populateQuarters: function() {
-        this.quarters.push(createQuarter())
+        this.quarters.push(createQuarter(this.maxLoad))
         // for all courses add each course to the course plan
         for (const courseToAdd of this.sortedCourses) {
             // start at quarter 0
@@ -196,7 +198,7 @@ const CoursePlanner = {
 
                 // only if the course is offered in the quarter can the course be added this quarter
                 // check if the course is offered in the quarter
-                let courseIsOfferedInQuarter = courseToAdd.encodeOfferingsAsNumbers().includes(qtrIdx % 4)
+                let courseIsOfferedInQuarter = courseToAdd.encodeOfferingsAsNumbers().includes(qtrIdx % this.calcTotalUsableTerms())
 
                 if (!haveAllPreqsBeenAdded) {
                     // check to see if any preqs are offered in the quarter
@@ -221,20 +223,31 @@ const CoursePlanner = {
                     // If the qtrIndex is gteq the total number of quarters, add a new quarter
                     // to the quarters array
                     if (++qtrIdx >= this.quarters.length) {
-                        this.quarters.push(createQuarter())
+                        this.quarters.push(createQuarter(this.maxLoad))
                     }
                 }
             } while(!courseAddedToQuarter)
         }
 
         return this.quarters
+    },
+
+    calcTotalUsableTerms: function() {
+        // NOTE: This can be expanded to utilize semester/quarter systems
+        if (this.useSummer) {
+            return 4
+        } else {
+            return 3
+        }
     }
 }
 
-export function createCoursePlanner() {
+export function createCoursePlanner(maxLoad=4, useSummer=false) {
     let newCoursePlan = Object.create(CoursePlanner)
     newCoursePlan.quarters = []
     newCoursePlan.sortedCourses = []
+    newCoursePlan.maxLoad = maxLoad
+    newCoursePlan.useSummer = useSummer
 
     return newCoursePlan
 }

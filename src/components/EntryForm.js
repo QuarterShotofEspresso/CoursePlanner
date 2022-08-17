@@ -10,8 +10,9 @@ const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfD
     const [disablePlanButton, setDisablePlanButton] = useState(false);
 
     const handleScramble = () => {
-        const scrambledCourseList = scrambleCourseList(courselist);
-        setCourselist(scrambledCourseList)
+        // const scrambledCourseList = scrambleCourseList(courselist);
+        // setCourselist(scrambledCourseList)
+        setCourselist(scrambleCourseList([...courselist]))
     }
 
     const handleJSONExport = () => {
@@ -37,13 +38,15 @@ const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfD
         setCourselist([newCourse, ...courselist])
 
         setDbgMsg('');
-        setEfData({cid: '', preq: '', offr: '', load: ''})
+        setEfData({...efData, cid: '', preq: '', offr: '', load: ''})
     }
 
     const handlePlan = () => {
         // disable the PLAN button while developing the plan
         setDisablePlanButton(true);
-        let myCoursePlanner = createCoursePlanner()
+        let parsedMaxLoadPerQuarter = parseInt(efData.loadPerQuarter)
+        let maxLoadPerQuarter = (parsedMaxLoadPerQuarter > 0) ? parsedMaxLoadPerQuarter : 4
+        let myCoursePlanner = createCoursePlanner(maxLoadPerQuarter, efData.useSummer)
         for (let course of courselist) {
             course.preqsAdded = 0
         }
@@ -112,11 +115,16 @@ const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfD
             <div className={'simple-style'}>
                 <button onClick={handleScramble}>SCRM</button>
                 <div>
-                    <input type={'checkbox'}/>
+                    <input type={'checkbox'} value={efData.useSummer}
+                           onChange={() => setEfData({...efData, useSummer: !efData.useSummer})}
+                    />
                     <label>Summer</label>
                 </div>
                 <div>
-                    <input type={'text'} className={'ef-text'} placeholder={'4'} size={2}/>
+                    <input type={'text'} className={'ef-text'} placeholder={'4'} size={2}
+                           value={efData.loadPerQuarter}
+                           onChange={e => setEfData({...efData, loadPerQuarter: e.target.value})}
+                    />
                     <label>Max Load/Quarter</label>
                 </div>
                 <button className={'ef-plan'} disabled={disablePlanButton} onClick={handlePlan}>PLAN</button>

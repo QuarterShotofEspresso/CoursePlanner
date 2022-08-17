@@ -11,7 +11,7 @@ const CourseTable = ({courselist, setCourselist, efData, setEfData}) => {
                 (course) => {return !course.selected}
             )
             setCourselist(updatedCourseListMatrix)
-            setEfData({cid: '', preq: '', offr: '', load: ''})
+            setEfData({...efData, cid: '', preq: '', offr: '', load: ''})
         }
     }
 
@@ -31,7 +31,7 @@ const CourseTable = ({courselist, setCourselist, efData, setEfData}) => {
                 load: courselist[selectedRowIdx].load
             })
         } else {
-            setEfData({cid: '', preq: '', offr: '', load: ''})
+            setEfData({...efData, cid: '', preq: '', offr: '', load: ''})
         }
     }
 

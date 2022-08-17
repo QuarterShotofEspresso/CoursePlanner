@@ -14,7 +14,7 @@ function App() {
     // Entry Form Data
     const [dbgMsg, setDbgMsg] = useState('');
     const [efData, setEfData] = useState({
-        cid: "", preq: "", offr: "", load: ""
+        cid: "", preq: "", offr: "", load: "", loadPerQuarter: "", useSummer: false
     })
 
     return (
