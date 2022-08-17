@@ -6,6 +6,26 @@
     margin-right: auto;
 }
 
+.content{
+    display: flex;
+    max-width: 412px;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: auto;
+    margin-left: auto;
+    font-family: Helvetica;
+}
+
+.simple-style{
+    display: flex;
+    max-width: 412px;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: auto;
+    margin-left: auto;
+    font-family: Helvetica;
+}
+
 .ef-text {
     font-family: "Courier New", "Lucida Grande";
     font-weight: bold;
@@ -46,16 +66,6 @@
 
 .vskip-5px{
     height: 5px;
-}
-
-.content{
-    display: flex;
-    max-width: 412px;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-right: auto;
-    margin-left: auto;
-    font-family: Helvetica;
 }
 
 button{

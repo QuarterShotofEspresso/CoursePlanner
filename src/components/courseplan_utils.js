@@ -29,12 +29,24 @@ const Course = {
 }
 
 
-export function createCourse(cid, preq='', offr='', load='') {
+export function createCourseFromString(cid, preq='', offr='', load='') {
     let newCourse = Object.create(Course)
     newCourse.cid = cid
     newCourse.preq = (preq.length === 0) ? [] : preq.split(' ')
     newCourse.offr = (offr.length === 0) ? 'FWSU' : offr
     newCourse.load = (load.length === 0) ? '1' : load
+    newCourse.selected = false
+    newCourse.preqsAdded = 0
+
+    return newCourse
+}
+
+export function createCourseFromRaw(cid, preq, offr, load) {
+    let newCourse = Object.create(Course)
+    newCourse.cid = cid
+    newCourse.preq = preq
+    newCourse.offr = offr
+    newCourse.load = load
     newCourse.selected = false
     newCourse.preqsAdded = 0
 
@@ -186,23 +198,25 @@ const CoursePlanner = {
                 // check if the course is offered in the quarter
                 let courseIsOfferedInQuarter = courseToAdd.encodeOfferingsAsNumbers().includes(qtrIdx % 4)
 
-                // if the course is both offered this quarter and all its preqs have been sorted will
-                // should the course attempt to be added to the quarter
-                if (courseIsOfferedInQuarter && haveAllPreqsBeenAdded) {
-                    // If the course is offered in the quarter, try to add it to the quarter
-                    // and save the status
-                    courseAddedToQuarter = this.quarters[qtrIdx].addCourse(courseToAdd)
-                }
-                // If the course is not offered in the quarter or all preqs have not yet been added
-                else {
+                if (!haveAllPreqsBeenAdded) {
                     // check to see if any preqs are offered in the quarter
                     // and eliminate them so as to mark the preqs as added
                     for (let addedCourse of this.quarters[qtrIdx].courses) {
-                        // courseToAdd.preqsAdded.push(courseToAdd.preq.filter((p) => {return p !== addedCourse}))
                         if (courseToAdd.preq.includes(addedCourse)) {
                             courseToAdd.preqsAdded++
                         }
                     }
+                }
+                // if the course is both offered this quarter and all its preqs have been sorted will
+                // should the course attempt to be added to the quarter
+                else if (courseIsOfferedInQuarter) {
+                    // If the course is offered in the quarter, try to add it to the quarter
+                    // and save the status
+                    courseAddedToQuarter = this.quarters[qtrIdx].addCourse(courseToAdd)
+                }
+
+                // If the course is not offered in the quarter or all preqs have not yet been added
+                if (!courseAddedToQuarter) {
                     // Increment the qtrIdx to move onto the following quarter
                     // If the qtrIndex is gteq the total number of quarters, add a new quarter
                     // to the quarters array

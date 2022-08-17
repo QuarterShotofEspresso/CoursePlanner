@@ -8,13 +8,7 @@ import {createCourse} from "./components/courseplan_utils";
 function App() {
 
     // Course Data
-    const [courselist, setCourselist] = useState(
-        () => {
-            let CS010A = createCourse("CS010A")
-            let CS010B = createCourse("CS010B", "CS010A")
-            return [CS010B, CS010A]
-        }
-    )
+    const [courselist, setCourselist] = useState([])
     const [coursePlanTableData, setCoursePlanTableData] = useState('')
 
     // Entry Form Data

@@ -1,7 +1,8 @@
 import './EntryForm.css';
 import * as util from "./help_entryform";
-import {createCourse, createCoursePlanner} from './courseplan_utils'
+import {createCourseFromRaw, createCourseFromString, createCoursePlanner} from './courseplan_utils'
 import {useState} from "react";
+import React from 'react';
 
 const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfData,
                        coursePlanTableData, setCoursePlanTableData}) => {
@@ -32,13 +33,12 @@ const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfD
             return;
         }
 
-        let newCourse = createCourse(efData.cid, efData.preq, efData.offr, efData.load)
+        let newCourse = createCourseFromString(efData.cid, efData.preq, efData.offr, efData.load)
         setCourselist([newCourse, ...courselist])
 
         setDbgMsg('');
         setEfData({cid: '', preq: '', offr: '', load: ''})
     }
-
 
     const handlePlan = () => {
         // disable the PLAN button while developing the plan
@@ -53,9 +53,43 @@ const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfD
         setDisablePlanButton(false);
     }
 
+    const hiddenFileInput = React.useRef(null);
+
+    const handleUpload = () => {
+        hiddenFileInput.current.click();
+    }
+
+    const handleUrlUpload = () => {
+
+    }
+
+    const parseFile = (e) => {
+        const fileReader = new FileReader();
+        let rawCourseListAsString
+        let rawCourseList
+        fileReader.readAsText(e.target.files[0], "UTF-8");
+        fileReader.onload = e => {
+            rawCourseListAsString = e.target.result
+            rawCourseList = JSON.parse(rawCourseListAsString)
+            setCourselist(rawCourseList.map(course => {
+                return createCourseFromRaw(course.cid, course.preq, course.offr, course.load)
+            }))
+        }
+    }
+
     return (
         <div className={'dbg-border'}>
-            <div className={'course-list-form-cont'}>
+            <div className={'simple-style'}>
+                <input type={'text'} className={'ef-text'} placeholder={"<URL>"}
+                       size={40} onKeyDown={handleUrlUpload}
+                />
+                <button onClick={handleUpload}>UPLD</button>
+                <input type={'file'} name={'UPLD'} ref={hiddenFileInput}
+                       accept={'.json'} style={{display:'none'}} onChange={parseFile}
+                />
+            </div>
+            <div className={'vskip-5px'}/>
+            <div className={'simple-style'}>
                 <input type={'text'} className={'ef-text'} id={'ef-cid'} placeholder={"CS010C"}
                        size={8} onKeyDown={handleKeyDown} value={efData.cid}
                        onChange={e => setEfData({...efData, cid: e.target.value.toUpperCase()})}
@@ -64,18 +98,18 @@ const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfD
                        size={21} onKeyDown={handleKeyDown} value={efData.preq}
                        onChange={e => setEfData({...efData, preq: e.target.value.toUpperCase()})}
                 />
-                <input type={'text'} className={'ef-text'} id={'ef-offr'} placeholder={"FWS"}
+                <input type={'text'} className={'ef-text'} id={'ef-offr'} placeholder={"FWSU"}
                        size={4} onKeyDown={handleKeyDown} value={efData.offr}
                        onChange={e => setEfData({...efData, offr: e.target.value.toUpperCase()})}
                 />
-                <input type={'text'} className={'ef-text'} id={'ef-load'} placeholder={"1.5"}
+                <input type={'text'} className={'ef-text'} id={'ef-load'} placeholder={"1"}
                        size={4} onKeyDown={handleKeyDown} value={efData.load}
                        onChange={e => setEfData({...efData, load: e.target.value.toUpperCase()})}
                 />
                 <button onClick={handleJSONExport}>JSON</button>
             </div>
             <div className={'vskip-5px'}/>
-            <div className={'content'}>
+            <div className={'simple-style'}>
                 <button onClick={handleScramble}>SCRM</button>
                 <div>
                     <input type={'checkbox'}/>
