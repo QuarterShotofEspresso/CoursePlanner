@@ -3,7 +3,7 @@ import CourseTable from './components/CourseTable'
 import EntryForm from './components/EntryForm'
 import CoursePlan from './components/CoursePlan'
 import {useState} from "react";
-import {createCourse} from "./components/courseplan_utils";
+import {createCourse} from "./components/cputil";
 
 function App() {
 

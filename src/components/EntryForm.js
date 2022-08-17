@@ -1,6 +1,6 @@
 import './EntryForm.css';
-import * as util from "./help_entryform";
-import {createCourseFromRaw, createCourseFromString, createCoursePlanner} from './courseplan_utils'
+import {downloadCourseDataAsJSON, scrambleCourseList} from "./efutil";
+import {createCourseFromRaw, createCourseFromString, createCoursePlanner} from './cputil'
 import {useState} from "react";
 import React from 'react';
 
@@ -10,7 +10,7 @@ const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfD
     const [disablePlanButton, setDisablePlanButton] = useState(false);
 
     const handleScramble = () => {
-        const scrambledCourseList = util.scrambleCourseList(courselist);
+        const scrambledCourseList = scrambleCourseList(courselist);
         setCourselist(scrambledCourseList)
     }
 
@@ -21,7 +21,7 @@ const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfD
         }
 
         const coursesAsJSON = JSON.stringify(courselist);
-        util.downloadCourseDataAsJSON(coursesAsJSON);
+        downloadCourseDataAsJSON(coursesAsJSON);
     }
 
     const handleKeyDown = (event) => {
