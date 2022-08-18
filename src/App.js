@@ -40,6 +40,7 @@ function App() {
             <div className={'vskip-20px'}/>
             <CoursePlan courselist={courselist} coursePlanTableData={coursePlanTableData}
                         setCoursePlanTableData={setCoursePlanTableData}/>
+            <div className={'vskip-50px'}/>
         </div>
     );
 }
