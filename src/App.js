@@ -8,7 +8,7 @@ import {createCourse} from "./components/cputil";
 function App() {
 
     // Course Data
-    const [courselist, setCourselist] = useState([])
+    const [courseList, setCourseList] = useState([])
     const [coursePlanTableData, setCoursePlanTableData] = useState('')
 
     // Entry Form Data
@@ -24,7 +24,7 @@ function App() {
                 <a href={"https://example.com"} target="_blank" rel="noopener noreferrer">Tutorial</a> <br/>
             </div>
             <div className={'vskip-20px'}/>
-            <EntryForm courselist={courselist} setCourselist={setCourselist}
+            <EntryForm courselist={courseList} setCourselist={setCourseList}
                        dbgMsg={dbgMsg} setDbgMsg={setDbgMsg} efData={efData}
                        setEfData={setEfData} coursePlanTableData={coursePlanTableData}
                        setCoursePlanTableData={setCoursePlanTableData}
@@ -32,13 +32,13 @@ function App() {
             <div className={'vskip-20px'}/>
             <hr/>
             <div className={'vskip-20px'}/>
-            <CourseTable courselist={courselist} setCourselist={setCourselist}
+            <CourseTable courselist={courseList} setCourselist={setCourseList}
                          efData={efData} setEfData={setEfData}
             />
             <div className={'vskip-20px'}/>
             <hr/>
             <div className={'vskip-20px'}/>
-            <CoursePlan courselist={courselist} coursePlanTableData={coursePlanTableData}
+            <CoursePlan courselist={courseList} coursePlanTableData={coursePlanTableData}
                         setCoursePlanTableData={setCoursePlanTableData}/>
             <div className={'vskip-50px'}/>
         </div>
