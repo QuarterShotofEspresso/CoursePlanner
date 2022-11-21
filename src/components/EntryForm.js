@@ -68,8 +68,18 @@ const EntryForm = ({courselist, setCourselist, efData, setEfData,
             setEfData({...efData, console: ""});
             return;
         }
-        let retStatus = fetchJsonFromURL(efData.url, setCourselist);
-        setEfData({...efData, console: retStatus});
+
+        let courselistAsString = fetchJsonFromURL(efData.url, setCourselist);
+
+        if (!courselistAsString) {
+            setEfData({...efData, console: "Could not parse URL."});
+        }
+
+        let rawCourseList = JSON.parse(courselistAsString)
+        setCourselist(rawCourseList.map(course => {
+            return createCourseFromRaw(course.cid, course.preq, course.offr, course.load)
+        }))
+        setEfData({...efData, console: "", url: ""});
     }
 
     const incompleteImplementation = () => {

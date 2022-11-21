@@ -26,7 +26,7 @@ function App() {
         <div className="App">
             <div className={'vskip-50px'}/>
             <div className={'dbg-border tut-msg'}>
-                <a href={"https://example.com"} target="_blank" rel="noopener noreferrer">Tutorial</a> <br/>
+                <a href={"https://raw.githubusercontent.com/QuarterShotofEspresso/CoursePlanner/master/sample_courselist/samplea.json"} target="_blank" rel="noopener noreferrer">samplea.json</a> <br/>
             </div>
             <div className={'vskip-20px'}/>
             <EntryForm courselist={courseList} setCourselist={setCourseList} efData={efData}

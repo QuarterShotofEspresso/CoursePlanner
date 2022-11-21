@@ -1,3 +1,4 @@
+import {createCourseFromRaw} from "./cputil";
 
 export function downloadCourseDataAsJSON(coursesAsJSON) {
     // Referenced from: https://theroadtoenterprise.com/blog/how-to-download-csv-and-json-files-in-react [
@@ -31,23 +32,18 @@ export function scrambleCourseList(courseList) {
     return scrambledCourseList;
 }
 
-export function fetchJsonFromURL(url, setCourseList, setEfData) {
+export function fetchJsonFromURL(url) {
+
+    let resp  = '';
     let xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                setCourseList(JSON.parse(xhr.responseText));
-                return ""
-            } else {
-                return "Couldn't parse data as JSON."
-            }
-        }
-    };
 
-    xhr.open('GET', url, true);
-    xhr.send();
+    if(xhr != null) {
+        xhr.open( "GET", url, false );
+        xhr.send( null );
+        resp = xhr.responseText;
+    }
 
-    return "Couldn't contact website.";
+    return resp;
 }
 
 // export function moveSeedCoursesToTop(courseList) {
