@@ -1,10 +1,10 @@
 import './EntryForm.css';
-import {downloadCourseDataAsJSON, scrambleCourseList} from "./efutil";
+import {downloadCourseDataAsJSON, scrambleCourseList, fetchJsonFromURL} from "./efutil";
 import {createCourseFromRaw, createCourseFromString, createCoursePlanner} from './cputil'
 import {useState} from "react";
 import React from 'react';
-
-const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfData,
+// dbgMsg, setDbgMsg,
+const EntryForm = ({courselist, setCourselist, efData, setEfData,
                        coursePlanTableData, setCoursePlanTableData}) => {
 
     const [disablePlanButton, setDisablePlanButton] = useState(false);
@@ -17,7 +17,7 @@ const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfD
 
     const handleJSONExport = () => {
         if(courselist.length === 0) {
-            setDbgMsg("No classes loaded in Course Table.");
+            setEfData({...efData, console: "No classes loaded in Course Table."});
             return;
         }
 
@@ -30,15 +30,15 @@ const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfD
 
         // verify collected data is valid
         if(efData.cid === '') {
-            setDbgMsg('');
+            setEfData({...efData, console: ""});
             return;
         }
 
         let newCourse = createCourseFromString(efData.cid, efData.preq, efData.offr, efData.load)
         setCourselist([newCourse, ...courselist])
 
-        setDbgMsg('');
-        setEfData({...efData, cid: '', preq: '', offr: '', load: ''})
+        // setDbgMsg('');
+        setEfData({...efData, cid: '', preq: '', offr: '', load: '', console: ''})
     }
 
     const handlePlan = () => {
@@ -62,8 +62,18 @@ const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfD
         hiddenFileInput.current.click();
     }
 
-    const handleUrlUpload = () => {
+    const handleUrlUpload = (event) => {
+        if (event.key !== 'Enter') return;
+        if (!efData.url) {
+            setEfData({...efData, console: ""});
+            return;
+        }
+        let retStatus = fetchJsonFromURL(efData.url, setCourselist);
+        setEfData({...efData, console: retStatus});
+    }
 
+    const incompleteImplementation = () => {
+        setEfData({...efData, console: "Functionality Not Added!"})
     }
 
     const parseFile = (e) => {
@@ -84,12 +94,10 @@ const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfD
         <div className={'dbg-border'}>
             <div className={'simple-style'}>
                 <input type={'text'} className={'ef-text'} placeholder={"<URL>"}
-                       size={40} onKeyDown={handleUrlUpload}
+                       size={46} onKeyDown={handleUrlUpload} value={efData.url}
+                       onChange={e => setEfData({...efData, url: e.target.value})}
                 />
-                <button onClick={handleUpload}>UPLD</button>
-                <input type={'file'} name={'UPLD'} ref={hiddenFileInput}
-                       accept={'.json'} style={{display:'none'}} onChange={parseFile}
-                />
+                <button onClick={incompleteImplementation}>+</button>
             </div>
             <div className={'vskip-5px'}/>
             <div className={'simple-style'}>
@@ -98,7 +106,7 @@ const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfD
                        onChange={e => setEfData({...efData, cid: e.target.value.toUpperCase()})}
                 />
                 <input type={'text'} className={'ef-text'} id={'ef-preq'} placeholder={"CS010B CS011"}
-                       size={21} onKeyDown={handleKeyDown} value={efData.preq}
+                       size={24} onKeyDown={handleKeyDown} value={efData.preq}
                        onChange={e => setEfData({...efData, preq: e.target.value.toUpperCase()})}
                 />
                 <input type={'text'} className={'ef-text'} id={'ef-offr'} placeholder={"FWSU"}
@@ -109,28 +117,61 @@ const EntryForm = ({courselist, setCourselist, dbgMsg, setDbgMsg, efData, setEfD
                        size={4} onKeyDown={handleKeyDown} value={efData.load}
                        onChange={e => setEfData({...efData, load: e.target.value.toUpperCase()})}
                 />
-                <button onClick={handleJSONExport}>JSON</button>
+                <button onClick={incompleteImplementation}>+</button>
             </div>
             <div className={'vskip-5px'}/>
             <div className={'simple-style'}>
-                <button onClick={handleScramble}>SCRM</button>
-                <div>
-                    <input type={'checkbox'} value={efData.useSummer}
-                           onChange={() => setEfData({...efData, useSummer: !efData.useSummer})}
+                <div className={'btn-group'}>
+                    <button className={'icon-btn outer-btn red-btn'} onClick={incompleteImplementation}
+                            title={'De/select all courses'}>
+                        <span className="material-symbols-outlined">checklist</span>
+                    </button>
+                    <button className={'icon-btn inner-btn'} onClick={incompleteImplementation}
+                            title={'Scramble courses'}>
+                        <span className="material-symbols-outlined">format_align_center</span>
+                    </button>
+                </div>
+                <div className={'btn-group'}>
+                    <button className={'icon-btn inner-btn'} onClick={handleUpload} title={'Import course table'}>
+                        <span className="material-symbols-outlined">upload</span>
+                    </button>
+                    <input type={'file'} name={'UPLD'} ref={hiddenFileInput}
+                           accept={'.json'} style={{display:'none'}} onChange={parseFile}
                     />
-                    <label>Summer</label>
+                    <button className={'icon-btn inner-btn'} onClick={handleJSONExport} title={'Export course table'}>
+                        <span className="material-symbols-outlined">download</span>
+                    </button>
+                </div>
+                {/*<div className={'btn-group'}>*/}
+                {/*    <button className={'icon-btn inner-btn'} onClick={incompleteImplementation} title={'Sort by lower frequency of offers to higher'}>F</button>*/}
+                {/*    <button className={'icon-btn inner-btn'} onClick={incompleteImplementation} title={'Sort by prerequisite'}>P</button>*/}
+                {/*    <button className={'icon-btn inner-btn'} onClick={incompleteImplementation} title={'Sort by consecutive courses'}>C</button>*/}
+                {/*</div>*/}
+                <div className={'btn-group'}>
+                    <button className={'icon-btn inner-btn'} onClick={incompleteImplementation}
+                            title={'Don\'t use Summer'}>
+                        <span className="material-symbols-outlined">sunny</span>
+                    </button>
+                    <button className={'icon-btn inner-btn'} onClick={incompleteImplementation}
+                            title={'Semester/Quarter'}>
+                        <span className="material-symbols-outlined">ac_unit</span>
+                    </button>
                 </div>
                 <div>
-                    <input type={'text'} className={'ef-text'} placeholder={'4'} size={2}
-                           value={efData.loadPerQuarter}
+                    <label htmlFor={'mlpt'}>Max Load/Term: </label>
+                    <input type={'text'} className={'ef-text'} placeholder={'4'} size={2} id={'mlpt'}
+                           value={efData.loadPerQuarter} style={{height: 23}}
                            onChange={e => setEfData({...efData, loadPerQuarter: e.target.value})}
                     />
-                    <label>Max Load/Quarter</label>
                 </div>
-                <button className={'ef-plan'} disabled={disablePlanButton} onClick={handlePlan}>PLAN</button>
+                <button className={'icon-btn outer-btn green-btn'} disabled={disablePlanButton} onClick={handlePlan}
+                        title={'Generate course plan'}
+                >
+                    <span className="material-symbols-outlined">schedule</span>
+                </button>
             </div>
             <div className={'vskip-5px'}/>
-            <input type={'text'} className={'ef-text dbg-console'}  placeholder={"No issues."} value={dbgMsg}
+            <input type={'text'} className={'ef-text dbg-console'}  placeholder={"No issues."} value={efData.console}
                    size={50} readOnly
             />
         </div>

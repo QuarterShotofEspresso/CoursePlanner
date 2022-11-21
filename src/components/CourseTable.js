@@ -44,7 +44,7 @@ const CourseTable = ({courselist, setCourselist, efData, setEfData}) => {
                         <th>ID</th>
                         <th>Prerequisites</th>
                         <th>Offered</th>
-                        <th>Diff</th>
+                        <th>Load</th>
                     </tr>
                 </thead>
                 <tbody>

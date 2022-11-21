@@ -7,14 +7,19 @@ import {createCourse} from "./components/cputil";
 
 function App() {
 
-    // Course Data
     const [courseList, setCourseList] = useState([])
     const [coursePlanTableData, setCoursePlanTableData] = useState('')
-
-    // Entry Form Data
-    const [dbgMsg, setDbgMsg] = useState('');
+    // const [dbgMsg, setDbgMsg] = useState('')
     const [efData, setEfData] = useState({
-        cid: "", preq: "", offr: "", load: "", loadPerQuarter: "", useSummer: false
+        cid: "",
+        preq: "",
+        offr: "",
+        load: "",
+        loadPerQuarter: "",
+        useSummer: false,
+        planAsSemester: false,
+        console: "",
+        url: ""
     })
 
     return (
@@ -24,8 +29,7 @@ function App() {
                 <a href={"https://example.com"} target="_blank" rel="noopener noreferrer">Tutorial</a> <br/>
             </div>
             <div className={'vskip-20px'}/>
-            <EntryForm courselist={courseList} setCourselist={setCourseList}
-                       dbgMsg={dbgMsg} setDbgMsg={setDbgMsg} efData={efData}
+            <EntryForm courselist={courseList} setCourselist={setCourseList} efData={efData}
                        setEfData={setEfData} coursePlanTableData={coursePlanTableData}
                        setCoursePlanTableData={setCoursePlanTableData}
             />

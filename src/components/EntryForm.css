@@ -20,10 +20,20 @@
     display: flex;
     max-width: 412px;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     margin-right: auto;
     margin-left: auto;
     font-family: Helvetica;
+}
+
+.maxload-entry-form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /*justify-content: space-between;*/
+    /*margin-right: auto;*/
+    /*margin-left: auto;*/
 }
 
 .ef-text {
@@ -71,4 +81,31 @@
 button{
     font-family: "Courier New";
     font-weight: bold;
+}
+
+.icon-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    /*margin-right: 4px;*/
+}
+
+.green-btn{
+    color: mediumseagreen;
+}
+
+.red-btn{
+    color: cornflowerblue;
+}
+
+.btn-group{
+    display: flex;
+    flex-direction: row;
+}
+
+.inner-btn{
+    margin-right: 3px;
+    margin-left: 3px;
 }

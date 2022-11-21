@@ -31,6 +31,25 @@ export function scrambleCourseList(courseList) {
     return scrambledCourseList;
 }
 
+export function fetchJsonFromURL(url, setCourseList, setEfData) {
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                setCourseList(JSON.parse(xhr.responseText));
+                return ""
+            } else {
+                return "Couldn't parse data as JSON."
+            }
+        }
+    };
+
+    xhr.open('GET', url, true);
+    xhr.send();
+
+    return "Couldn't contact website.";
+}
+
 // export function moveSeedCoursesToTop(courseList) {
 //     const seedCourses = courseList.filter( (course) => {
 //         return (course.courseData.prereq[0] === "" || course.courseData.prereq.length === 0);
