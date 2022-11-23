@@ -8,12 +8,28 @@ const EntryForm = ({courselist, setCourselist, efData, setEfData,
                        coursePlanTableData, setCoursePlanTableData}) => {
 
     const [disablePlanButton, setDisablePlanButton] = useState(false);
+    const [selectAll, setSelectAll] = useState(false);
 
     const handleScramble = () => {
         // const scrambledCourseList = scrambleCourseList(courselist);
         // setCourselist(scrambledCourseList)
         setCourselist(scrambleCourseList([...courselist]))
     }
+
+    // const handleGlobalHighlight = () => {
+    //     // setCourselist(courselist.map((course) => {
+    //     //     return course.selected = selectAll;
+    //     // }))
+    //     // setCourselist(courselist.map(course))
+    //
+    //     // setEfData({...efData, globalSelectState: !selectAll})
+    //     const courseListCopy = courselist.map((course)=>{
+    //         return {...course, selected: selectAll}
+    //     })
+    //     setCourselist(courseListCopy)
+    //     setSelectAll(!selectAll);
+    // }
+
 
     const handleJSONExport = () => {
         if(courselist.length === 0) {
@@ -25,9 +41,23 @@ const EntryForm = ({courselist, setCourselist, efData, setEfData,
         downloadCourseDataAsJSON(coursesAsJSON);
     }
 
-    const handleKeyDown = (event) => {
+    const handleAddCourseByEnter = (event) => {
         if (event.key !== 'Enter') return;
 
+        // verify collected data is valid
+        if(efData.cid === '') {
+            setEfData({...efData, console: ""});
+            return;
+        }
+
+        let newCourse = createCourseFromString(efData.cid, efData.preq, efData.offr, efData.load)
+        setCourselist([newCourse, ...courselist])
+
+        // setDbgMsg('');
+        setEfData({...efData, cid: '', preq: '', offr: '', load: '', console: ''})
+    }
+
+    const handleAddCourseByPlus = () => {
         // verify collected data is valid
         if(efData.cid === '') {
             setEfData({...efData, console: ""});
@@ -56,14 +86,40 @@ const EntryForm = ({courselist, setCourselist, efData, setEfData,
         setDisablePlanButton(false);
     }
 
+
+
     const hiddenFileInput = React.useRef(null);
 
     const handleUpload = () => {
         hiddenFileInput.current.click();
     }
 
-    const handleUrlUpload = (event) => {
+    // function updateCourseListFromString(rawCourseList) {
+    //
+    // }
+
+    const handleUrlUploadByEnter = (event) => {
         if (event.key !== 'Enter') return;
+        if (!efData.url) {
+            setEfData({...efData, console: ""});
+            return;
+        }
+
+        let courselistAsString = fetchJsonFromURL(efData.url, setCourselist);
+
+        if (!courselistAsString) {
+            setEfData({...efData, console: "Could not parse URL."});
+        }
+
+        let rawCourseList = JSON.parse(courselistAsString)
+        setCourselist(rawCourseList.map(course => {
+            return createCourseFromRaw(course.cid, course.preq, course.offr, course.load)
+        }))
+        setEfData({...efData, console: "", url: ""});
+    }
+
+    const handleUrlUploadByPlus = () => {
+        // if (event.key !== 'Enter') return;
         if (!efData.url) {
             setEfData({...efData, console: ""});
             return;
@@ -104,30 +160,30 @@ const EntryForm = ({courselist, setCourselist, efData, setEfData,
         <div className={'dbg-border'}>
             <div className={'simple-style'}>
                 <input type={'text'} className={'ef-text'} placeholder={"<URL>"}
-                       size={46} onKeyDown={handleUrlUpload} value={efData.url}
+                       size={46} onKeyDown={handleUrlUploadByEnter} value={efData.url}
                        onChange={e => setEfData({...efData, url: e.target.value})}
                 />
-                <button onClick={incompleteImplementation}>+</button>
+                <button onClick={handleUrlUploadByPlus}>+</button>
             </div>
             <div className={'vskip-5px'}/>
             <div className={'simple-style'}>
                 <input type={'text'} className={'ef-text'} id={'ef-cid'} placeholder={"CS010C"}
-                       size={8} onKeyDown={handleKeyDown} value={efData.cid}
+                       size={8} onKeyDown={handleAddCourseByEnter} value={efData.cid}
                        onChange={e => setEfData({...efData, cid: e.target.value.toUpperCase()})}
                 />
                 <input type={'text'} className={'ef-text'} id={'ef-preq'} placeholder={"CS010B CS011"}
-                       size={24} onKeyDown={handleKeyDown} value={efData.preq}
+                       size={24} onKeyDown={handleAddCourseByEnter} value={efData.preq}
                        onChange={e => setEfData({...efData, preq: e.target.value.toUpperCase()})}
                 />
                 <input type={'text'} className={'ef-text'} id={'ef-offr'} placeholder={"FWSU"}
-                       size={4} onKeyDown={handleKeyDown} value={efData.offr}
+                       size={4} onKeyDown={handleAddCourseByEnter} value={efData.offr}
                        onChange={e => setEfData({...efData, offr: e.target.value.toUpperCase()})}
                 />
                 <input type={'text'} className={'ef-text'} id={'ef-load'} placeholder={"1"}
-                       size={4} onKeyDown={handleKeyDown} value={efData.load}
+                       size={4} onKeyDown={handleAddCourseByEnter} value={efData.load}
                        onChange={e => setEfData({...efData, load: e.target.value.toUpperCase()})}
                 />
-                <button onClick={incompleteImplementation}>+</button>
+                <button onClick={handleAddCourseByPlus}>+</button>
             </div>
             <div className={'vskip-5px'}/>
             <div className={'simple-style'}>
@@ -136,7 +192,7 @@ const EntryForm = ({courselist, setCourselist, efData, setEfData,
                             title={'De/select all courses'}>
                         <span className="material-symbols-outlined">checklist</span>
                     </button>
-                    <button className={'icon-btn inner-btn'} onClick={incompleteImplementation}
+                    <button className={'icon-btn inner-btn'} onClick={handleScramble}
                             title={'Scramble courses'}>
                         <span className="material-symbols-outlined">format_align_center</span>
                     </button>
@@ -152,11 +208,6 @@ const EntryForm = ({courselist, setCourselist, efData, setEfData,
                         <span className="material-symbols-outlined">download</span>
                     </button>
                 </div>
-                {/*<div className={'btn-group'}>*/}
-                {/*    <button className={'icon-btn inner-btn'} onClick={incompleteImplementation} title={'Sort by lower frequency of offers to higher'}>F</button>*/}
-                {/*    <button className={'icon-btn inner-btn'} onClick={incompleteImplementation} title={'Sort by prerequisite'}>P</button>*/}
-                {/*    <button className={'icon-btn inner-btn'} onClick={incompleteImplementation} title={'Sort by consecutive courses'}>C</button>*/}
-                {/*</div>*/}
                 <div className={'btn-group'}>
                     <button className={'icon-btn inner-btn'} onClick={incompleteImplementation}
                             title={'Don\'t use Summer'}>

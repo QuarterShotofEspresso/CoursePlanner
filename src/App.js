@@ -9,7 +9,6 @@ function App() {
 
     const [courseList, setCourseList] = useState([])
     const [coursePlanTableData, setCoursePlanTableData] = useState('')
-    // const [dbgMsg, setDbgMsg] = useState('')
     const [efData, setEfData] = useState({
         cid: "",
         preq: "",
