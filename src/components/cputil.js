@@ -53,6 +53,17 @@ export function createCourseFromRaw(cid, preq, offr, load) {
     return newCourse
 }
 
+export function reformatPreqsForTable(preqAsList) {
+    // let preqAsList = preqAsString.split(' ')
+    return preqAsList.map(preq => {
+        if (preq[0] === '*' && preq[1] !== '*') {
+            return preq
+        } else {
+            return preq
+        }
+    }).join(' ')
+}
+
 
 // Fall Winter Spring Summer
 // 0    1      2      3

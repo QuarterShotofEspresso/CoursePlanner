@@ -1,5 +1,5 @@
 import './App.css';
-import CourseTable from './components/CourseTable'
+import CourseList from './components/CourseList'
 import EntryForm from './components/EntryForm'
 import CoursePlan from './components/CoursePlan'
 import {useState} from "react";
@@ -8,15 +8,15 @@ import {createCourse} from "./components/cputil";
 function App() {
 
     const [courseList, setCourseList] = useState([])
-    const [coursePlanTableData, setCoursePlanTableData] = useState('')
-    const [efData, setEfData] = useState({
+    const [coursePlan, setCoursePlan] = useState('')
+    const [entryForm, setEntryForm] = useState({
         cid: "",
         preq: "",
         offr: "",
         load: "",
         loadPerQuarter: "",
         useSummer: false,
-        planAsSemester: false,
+        useSemesterSystem: false,
         console: "",
         url: ""
     })
@@ -29,21 +29,21 @@ function App() {
                    target="_blank" rel="noopener noreferrer">Click on me. Copy the URL. Paste it below. Press Return</a><br/>
             </div>
             <div className={'vskip-20px'}/>
-            <EntryForm courselist={courseList} setCourselist={setCourseList} efData={efData}
-                       setEfData={setEfData} coursePlanTableData={coursePlanTableData}
-                       setCoursePlanTableData={setCoursePlanTableData}
+            <EntryForm courseList={courseList} setCourseList={setCourseList}
+                       entryForm={entryForm} setEntryForm={setEntryForm}
+                       coursePlan={coursePlan} setCoursePlan={setCoursePlan}
             />
             <div className={'vskip-20px'}/>
             <hr/>
             <div className={'vskip-20px'}/>
-            <CourseTable courselist={courseList} setCourselist={setCourseList}
-                         efData={efData} setEfData={setEfData}
+            <CourseList entryForm={entryForm} setEntryForm={setEntryForm}
+                        courseList={courseList} setCourseList={setCourseList}
             />
             <div className={'vskip-20px'}/>
             <hr/>
             <div className={'vskip-20px'}/>
-            <CoursePlan courselist={courseList} coursePlanTableData={coursePlanTableData}
-                        setCoursePlanTableData={setCoursePlanTableData}/>
+            <CoursePlan entryForm={entryForm} setEntryForm={setEntryForm}
+                        coursePlan={coursePlan} setCoursePlan={setCoursePlan}/>
             <div className={'vskip-50px'}/>
         </div>
     );

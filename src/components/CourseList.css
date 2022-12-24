@@ -17,6 +17,14 @@ tbody{
 table{
     border-collapse: collapse;
 }
+/*https://vembarrajan.medium.com/html-css-tricks-scroll-able-table-body-tbody-d23182ae0fbc*/
+/*https://www.w3schools.com/cssref/pr_class_display.php*/
+.CourseList-body {
+    /*display: block;*/
+    max-height: 300px;
+    overflow: scroll;
+    width: 100%;
+}
 
 /*th, td {*/
 /*    border: 1px solid black;*/

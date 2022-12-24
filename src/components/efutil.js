@@ -33,7 +33,7 @@ export function scrambleCourseList(courseList) {
 }
 
 export function fetchJsonFromURL(url) {
-
+    // https://dmitripavlutin.com/javascript-fetch-async-await/#1-intro-to-fetch
     let resp  = '';
     let xhr = new XMLHttpRequest();
 
