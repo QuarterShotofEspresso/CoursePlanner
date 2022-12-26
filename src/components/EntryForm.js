@@ -198,11 +198,11 @@ const EntryForm = ({courseList, setCourseList,
             <div className={'vskip-5px'}/>
             <div className={'simple-style'}>
                 <div className={'btn-group'}>
-                    <button className={'icon-btn outer-btn red-btn'} onClick={incompleteImplementation}
-                            title={'De/select all courses'}>
-                        <span className="material-symbols-outlined">checklist</span>
-                    </button>
-                    <button className={'icon-btn inner-btn'} onClick={handleScramble}
+                    {/*<button className={'icon-btn outer-btn red-btn'} onClick={incompleteImplementation}*/}
+                    {/*        title={'De/select all courses'}>*/}
+                    {/*    <span className="material-symbols-outlined">checklist</span>*/}
+                    {/*</button>*/}
+                    <button className={'icon-btn outer-btn'} onClick={handleScramble}
                             title={'Scramble courses'}>
                         <span className="material-symbols-outlined">format_align_center</span>
                     </button>
