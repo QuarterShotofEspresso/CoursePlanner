@@ -12,11 +12,13 @@ const Course = {
     // NOTE: asString and asCourse methods will NEVER be implmentetd because daata will be saved in JSON format
     // asString: () => {return this.cid + ";" + " ".join(this.preq) + ";" + this.offr + ";" + this.load;},
     // asCourse: (courseString) => {return util.createCourseFromString(courseString)}
-    toggleSelection: function() {
-        this.selected = ~this.selected
-        return this.selected
+    // toggleSelection: function() {
+    //     this.selected = ~this.selected
+    //     return this.selected
+    // },
+    getSelectionColor: function() {
+        return (this.selected === 2) ? 'lightgray' : (this.selected === 1) ? 'lightblue' : 'white';
     },
-    getSelectionColor: function() {return (this.selected) ? 'lightblue' : 'white'},
     encodeOfferingsAsNumbers: function() {
         const encodedOfferings = []
         if (this.offr.includes('F')) encodedOfferings.push(0)

@@ -1,6 +1,8 @@
 // import {ReactComponent} from "*.svg";
 import './CourseList.css'
+import {Course} from "./cputil.js"
 // import data from './mock-data.json'
+
 
 const CourseList = ({courseList, setCourseList, entryForm, setEntryForm}) => {
 
@@ -16,13 +18,20 @@ const CourseList = ({courseList, setCourseList, entryForm, setEntryForm}) => {
     }
 
     const handleCourseSelect = (event) => {
-        const selectedRowIdx = event.target.parentNode.rowIndex - 1;
+        const selectedRowIdx = event.target.parentNode.rowIndex - 1
         // toggle the selected row's highlight
-        // NOTE: Currently a terrible way to force re-render
-        const courseIsSelected = courseList[selectedRowIdx].toggleSelection();
-        setCourseList([...courseList])
-        // send the selected course's details to the entry form if a course has been selected
-        if (courseIsSelected) {
+        const updatedCourseList = courseList.map((course, index) => {
+            if (index === selectedRowIdx) {
+                return {...course, selected: !course.selected}
+            } else {
+                return {...course}
+            }
+        })
+        setCourseList(updatedCourseList)
+        // https://smartdevpreneur.com/the-complete-react-table-click-and-row-selection-tutorial/
+
+        // if a course has been selected, send it to the Entry Form
+        if (!courseList[selectedRowIdx].selected) {
             setEntryForm({
                 ...entryForm,
                 cid: courseList[selectedRowIdx].cid,
@@ -30,7 +39,8 @@ const CourseList = ({courseList, setCourseList, entryForm, setEntryForm}) => {
                 offr: courseList[selectedRowIdx].offr,
                 load: courseList[selectedRowIdx].load
             })
-        } else {
+        } // otherwise clear it
+        else {
             setEntryForm({...entryForm, cid: '', preq: '', offr: '', load: ''})
         }
     }
@@ -50,7 +60,8 @@ const CourseList = ({courseList, setCourseList, entryForm, setEntryForm}) => {
                 {/*<div className={'CourseList-body'}>*/}
                     <tbody className={'CourseList-body'}>
                     {courseList.map((course) => (
-                        <tr style={{"backgroundColor": course.getSelectionColor()}} onClick={handleCourseSelect}
+                        // <tr className={'CourseList-row'} style={{"backgroundColor": course.getSelectionColor()}} onClick={handleCourseSelect}
+                        <tr className={'default-row' + ((course.selected) ? ' selected-row' : '')} onClick={handleCourseSelect}
                             onKeyDown={handleDeleteSelectedCourses} tabIndex={0}
                         >
                             <td>{course.cid}</td>

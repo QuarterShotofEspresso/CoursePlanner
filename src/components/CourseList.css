@@ -10,6 +10,18 @@ tbody{
     font-weight: normal;
 }
 
+.default-row {
+    background-color: white;
+}
+
+.default-row:hover, .selected-row:hover {
+    background-color: lightblue;
+}
+
+.selected-row {
+    background-color: aqua;
+}
+
 .prereq-td{
     text-align: left;
 }

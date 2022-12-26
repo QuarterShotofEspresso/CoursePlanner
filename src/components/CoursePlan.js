@@ -24,14 +24,11 @@ const CoursePlan = ({entryForm, setEntryForm, coursePlan, setCoursePlan}) => {
             <table className={"course-table"} border={'1'}>
                 <caption>Course Plan</caption>
                 <thead>
-                    {/*<tr dangerouslySetInnerHTML={{__html: renderTerms()}}/>*/}
                     <tr>
-                        {/*{renderTerms}*/}
                         <th>Year</th>
                         <th>F</th>
                         {renderWinterQuarter()}
                         <th>S</th>
-                        {/*<th>U</th>*/}
                         {renderSummerTerm()}
                     </tr>
                 </thead>
