@@ -6,7 +6,7 @@ import {Course} from "./cputil.js"
 
 const CourseList = ({courseList, setCourseList, entryForm, setEntryForm}) => {
 
-    const handleDeleteSelectedCourses = (event) => {
+    const deleteSelectedCourses = (event) => {
         if(event.key === 'Delete' || event.key === 'Backspace') {
             // filter off selected courses
             const updatedCourseListMatrix = courseList.filter(
@@ -17,7 +17,18 @@ const CourseList = ({courseList, setCourseList, entryForm, setEntryForm}) => {
         }
     }
 
-    const handleCourseSelect = (event) => {
+    const selectAllCourses = () => {
+        const totalSelectedCourses = courseList.reduce((runningTotal, course) => {
+            return runningTotal + course.selected
+        }, 0)
+        const updateTo = (totalSelectedCourses < (courseList.length / 2))
+        const updatedCourseList = courseList.map((course) => {
+            return {...course, selected: updateTo}
+        })
+        setCourseList(updatedCourseList)
+    }
+
+    const selectCourse = (event) => {
         const selectedRowIdx = event.target.parentNode.rowIndex - 1
         // toggle the selected row's highlight
         const updatedCourseList = courseList.map((course, index) => {
@@ -61,8 +72,8 @@ const CourseList = ({courseList, setCourseList, entryForm, setEntryForm}) => {
                     <tbody className={'CourseList-body'}>
                     {courseList.map((course) => (
                         // <tr className={'CourseList-row'} style={{"backgroundColor": course.getSelectionColor()}} onClick={handleCourseSelect}
-                        <tr className={'default-row' + ((course.selected) ? ' selected-row' : '')} onClick={handleCourseSelect}
-                            onKeyDown={handleDeleteSelectedCourses} tabIndex={0}
+                        <tr className={'default-row' + ((course.selected) ? ' selected-row' : '')} onClick={selectCourse}
+                            onKeyDown={deleteSelectedCourses} tabIndex={0} onDoubleClick={selectAllCourses}
                         >
                             <td>{course.cid}</td>
                             {/*<td className={'prereq-td'} dangerouslySetInnerHTML={{ __html: reformatPreqsForTable(course.preq)}}/>*/}

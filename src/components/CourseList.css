@@ -14,12 +14,12 @@ tbody{
     background-color: white;
 }
 
-.default-row:hover, .selected-row:hover {
+.default-row:hover {
     background-color: lightblue;
 }
 
-.selected-row {
-    background-color: aqua;
+.selected-row, .selected-row:hover {
+    background-color: mediumturquoise;
 }
 
 .prereq-td{
