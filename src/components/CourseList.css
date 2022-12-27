@@ -18,8 +18,13 @@ tbody{
     background-color: lightblue;
 }
 
-.selected-row, .selected-row:hover {
-    background-color: mediumturquoise;
+.selected-row {
+    background-color: deepskyblue;
+    /*color: white;*/
+}
+
+.selected-row:hover {
+    background-color: #61dafb;
 }
 
 .prereq-td{

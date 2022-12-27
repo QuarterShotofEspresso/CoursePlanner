@@ -18,12 +18,12 @@ const CourseList = ({courseList, setCourseList, entryForm, setEntryForm}) => {
     }
 
     const selectAllCourses = () => {
-        const totalSelectedCourses = courseList.reduce((runningTotal, course) => {
+        const frequencyOfSelectedCourses = courseList.reduce((runningTotal, course) => {
             return runningTotal + course.selected
         }, 0)
-        const updateTo = (totalSelectedCourses < (courseList.length / 2))
+        const isSelectedFrequencyLess = frequencyOfSelectedCourses < (courseList.length / 2)
         const updatedCourseList = courseList.map((course) => {
-            return {...course, selected: updateTo}
+            return {...course, selected: isSelectedFrequencyLess}
         })
         setCourseList(updatedCourseList)
     }
