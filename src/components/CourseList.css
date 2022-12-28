@@ -18,14 +18,16 @@ tbody{
     background-color: lightblue;
 }
 
+.selected-row:hover {
+    background-color: #61dafb;
+}
+
 .selected-row {
     background-color: deepskyblue;
     /*color: white;*/
 }
 
-.selected-row:hover {
-    background-color: #61dafb;
-}
+
 
 .prereq-td{
     text-align: left;
