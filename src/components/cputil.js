@@ -16,9 +16,9 @@ const Course = {
     //     this.selected = ~this.selected
     //     return this.selected
     // },
-    getSelectionColor: function() {
-        return (this.selected === 2) ? 'lightgray' : (this.selected === 1) ? 'lightblue' : 'white';
-    },
+    // getSelectionColor: function() {
+    //     return (this.selected === 2) ? 'lightgray' : (this.selected === 1) ? 'lightblue' : 'white';
+    // },
     encodeOfferingsAsNumbers: function() {
         const encodedOfferings = []
         if (this.offr.includes('F')) encodedOfferings.push(0)

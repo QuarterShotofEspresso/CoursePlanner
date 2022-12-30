@@ -16,7 +16,7 @@ function App() {
         load: "",
         loadPerQuarter: "",
         useSummer: false,
-        useSemesterSystem: false,
+        // useQuarterSystem: true,
         console: "",
         url: ""
     })

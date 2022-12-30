@@ -1,6 +1,6 @@
 // import {ReactComponent} from "*.svg";
 import './CourseList.css'
-import {Course} from "./cputil.js"
+// import {Course} from "./cputil.js"
 import {useState} from "react";
 // import data from './mock-data.json'
 
@@ -22,7 +22,7 @@ const CourseList = ({courseList, setCourseList, entryForm, setEntryForm}) => {
                 setStartingDragSelectionState(!course.selected)
                 return {...course, selected: !course.selected}
             } else {
-                return {...course}
+                return course
             }
         })
         setCourseList(updatedCourseList)
@@ -55,7 +55,7 @@ const CourseList = ({courseList, setCourseList, entryForm, setEntryForm}) => {
         }
     }
 
-    const selectAllCourses = () => {
+    const selectAllCourses = (event) => {
         const frequencyOfSelectedCourses = courseList.reduce((runningTotal, course) => {
             return runningTotal + course.selected
         }, 0)
@@ -64,86 +64,31 @@ const CourseList = ({courseList, setCourseList, entryForm, setEntryForm}) => {
             return {...course, selected: isSelectedFrequencyLess}
         })
         setCourseList(updatedCourseList)
+        const selectedRowIdx = event.target.parentNode.rowIndex - 1
+        updateEntryForm(selectedRowIdx)
     }
-
-    // const selectCourse = (event) => {
-    //     const selectedRowIdx = event.target.parentNode.rowIndex - 1
-    //     // toggle the selected row's highlight
-    //     const updatedCourseList = courseList.map((course, index) => {
-    //         if (index === selectedRowIdx) {
-    //             return {...course, selected: !course.selected}
-    //         } else {
-    //             return {...course}
-    //         }
-    //     })
-    //     setCourseList(updatedCourseList)
-    //     // https://smartdevpreneur.com/the-complete-react-table-click-and-row-selection-tutorial/
-    //
-    //     // if a course has been selected, send it to the Entry Form
-    //     if (!courseList[selectedRowIdx].selected) {
-    //         setEntryForm({
-    //             ...entryForm,
-    //             cid: courseList[selectedRowIdx].cid,
-    //             preq: courseList[selectedRowIdx].preq.join(' '),
-    //             offr: courseList[selectedRowIdx].offr,
-    //             load: courseList[selectedRowIdx].load
-    //         })
-    //     } // otherwise clear it
-    //     else {
-    //         setEntryForm({...entryForm, cid: '', preq: '', offr: '', load: ''})
-    //     }
-    // }
 
     // TODO: Test if these functions work
     const beginDraggingSelect = (event) => {
         // log the transitioned drag
         event.preventDefault()
-
         // identify the clicked row
         const selectedRowIdx = event.target.parentNode.rowIndex - 1
-        // create a new course list with the selection state of
-        // the clicked row toggled
-        // const updatedCourseList = courseList.map((course, index) => {
-        //     if (index === selectedRowIdx) {
-        //         // log the selection state of the logged row
-        //         setStartingDragSelectionState(!course.selected)
-        //         return {...course, selected: !course.selected}
-        //     } else {
-        //         return {...course}
-        //     }
-        // })
-        // setCourseList(updatedCourseList)
+
         toggleSelectionOfCourse(selectedRowIdx)
         updateEntryForm(selectedRowIdx)
-
-        // if a course has been selected, send it to the Entry Form
-        // if (!courseList[selectedRowIdx].selected) {
-        //     setEntryForm({
-        //         ...entryForm,
-        //         cid: courseList[selectedRowIdx].cid,
-        //         preq: courseList[selectedRowIdx].preq.join(' '),
-        //         offr: courseList[selectedRowIdx].offr,
-        //         load: courseList[selectedRowIdx].load
-        //     })
-        // } // otherwise clear it
-        // else {
-        //     setEntryForm({...entryForm, cid: '', preq: '', offr: '', load: ''})
-        // }
-
         setEnableDragSelection(true)
     }
 
-    // TODO: replace inner if block with toggle function
-    // TODO: add the updateEntryForm function here if it works...
     const propagateDraggingSelect = (event) => {
         if(enableDragSelection) {
-            console.log("Propagating Drag Select...")
+            // console.log("Propagating Drag Select...")
             const selectedRowIdx = event.target.parentNode.rowIndex - 1
             const updatedCourseList = courseList.map((course, index) => {
                 if (index === selectedRowIdx) {
                     return {...course, selected: startingDragSelectionState}
                 } else {
-                    return {...course}
+                    return course
                 }
             })
             setCourseList(updatedCourseList)
@@ -151,7 +96,7 @@ const CourseList = ({courseList, setCourseList, entryForm, setEntryForm}) => {
     }
 
     const endDraggingSelect = () => {
-        console.log("Ending Drag Select...")
+        // console.log("Ending Drag Select...")
         setEnableDragSelection(false)
     }
 

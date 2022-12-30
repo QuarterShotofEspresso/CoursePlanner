@@ -1,4 +1,4 @@
-import {createCourseFromRaw} from "./cputil";
+// import {createCourseFromRaw} from "./cputil";
 
 export function downloadCourseDataAsJSON(coursesAsJSON) {
     // Referenced from: https://theroadtoenterprise.com/blog/how-to-download-csv-and-json-files-in-react [

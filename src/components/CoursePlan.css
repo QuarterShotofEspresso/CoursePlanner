@@ -1,0 +1,19 @@
+.selected-term {
+    background-color: lightgray;
+    color: gray;
+}
+
+.selected-term:hover {
+    background-color: lightgray;
+    color: gray;
+}
+
+.unselected-term {
+    background-color: white;
+    color: black;
+}
+
+.unselected-term:hover {
+    background-color: lightgray;
+    color: black;
+}

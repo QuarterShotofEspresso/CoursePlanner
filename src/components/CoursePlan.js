@@ -1,15 +1,13 @@
-import './EntryForm.css';
-import {useEffect} from "react";
+// import './EntryForm.css';
+import {useEffect, useState} from "react";
+import './CoursePlan.css'
 
 const CoursePlan = ({entryForm, setEntryForm, coursePlan, setCoursePlan}) => {
 
-    function renderWinterQuarter() {
-        if (entryForm.useSemesterSystem) {
-            return <th>W</th>
-        } else {
-            return null
-        }
-    }
+    const [enableFall, setEnableFall] = useState(false)
+    const [enableWinter, setEnableWinter] = useState(false)
+    const [enableSpring, setEnableSpring] = useState(false)
+    const [enableSummer, setEnableSummer] = useState(false)
 
     function renderSummerTerm() {
         if (entryForm.useSummer) {
@@ -26,10 +24,10 @@ const CoursePlan = ({entryForm, setEntryForm, coursePlan, setCoursePlan}) => {
                 <thead>
                     <tr>
                         <th>Year</th>
-                        <th>F</th>
-                        {renderWinterQuarter()}
-                        <th>S</th>
-                        {renderSummerTerm()}
+                        <th className={(enableFall) ? "selected-term" : "unselected-term"} onClick={() => setEnableFall(!enableFall)}>F</th>
+                        <th className={(enableWinter) ? "selected-term" : "unselected-term"} onClick={() => setEnableWinter(!enableWinter)}>W</th>
+                        <th className={(enableSpring) ? "selected-term" : "unselected-term"} onClick={() => setEnableSpring(!enableSpring)}>S</th>
+                        <th className={(enableSummer) ? "selected-term" : "unselected-term"} onClick={() => setEnableSummer(!enableSummer)}>U</th>
                     </tr>
                 </thead>
                 <tbody dangerouslySetInnerHTML={{__html: coursePlan}}/>

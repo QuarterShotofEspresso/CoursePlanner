@@ -157,10 +157,10 @@ const EntryForm = ({courseList, setCourseList,
         }
     }
 
-    const toggleSystem = () => {
-        setCoursePlan("")
-        setEntryForm({...entryForm, useSemesterSystem: !entryForm.useSemesterSystem})
-    }
+    // const toggleSystem = () => {
+    //     setCoursePlan("")
+    //     setEntryForm({...entryForm, useQuarterSystem: !entryForm.useQuarterSystem})
+    // }
 
     const toggleSummer = () => {
         setEntryForm({...entryForm, useSummer: !entryForm.useSummer})
@@ -218,16 +218,16 @@ const EntryForm = ({courseList, setCourseList,
                         <span className="material-symbols-outlined">download</span>
                     </button>
                 </div>
-                <div className={'btn-group'}>
-                    <button className={'icon-btn inner-btn'} onClick={toggleSummer}
-                            title={'Don\'t use Summer'}>
-                        <span className="material-symbols-outlined">sunny</span>
-                    </button>
-                    <button className={'icon-btn inner-btn'} onClick={toggleSystem}
-                            title={'Semester/Quarter'}>
-                        <span className="material-symbols-outlined">ac_unit</span>
-                    </button>
-                </div>
+                {/*<div className={'btn-group'}>*/}
+                {/*    <button className={'icon-btn inner-btn'} onClick={toggleSummer}*/}
+                {/*            title={'Don\'t use Summer'}>*/}
+                {/*        <span className="material-symbols-outlined">sunny</span>*/}
+                {/*    </button>*/}
+                {/*    <button className={'icon-btn inner-btn'} onClick={toggleSystem}*/}
+                {/*            title={'Semester/Quarter'}>*/}
+                {/*        <span className="material-symbols-outlined">ac_unit</span>*/}
+                {/*    </button>*/}
+                {/*</div>*/}
                 <div>
                     <label htmlFor={'mlpt'}>Max Load/Term: </label>
                     <input type={'text'} className={'ef-text'} placeholder={'4'} size={2} id={'mlpt'}
