@@ -9,28 +9,12 @@ const EntryForm = ({courseList, setCourseList,
                        coursePlan, setCoursePlan}) => {
 
     const [disablePlanButton, setDisablePlanButton] = useState(false);
-    const [selectAll, setSelectAll] = useState(false);
 
     const handleScramble = () => {
         // const scrambledcourseList = scramblecourseList(courseList);
         // setCourseList(scrambledcourseList)
         setCourseList(scrambleCourseList([...courseList]))
     }
-
-    // const handleGlobalHighlight = () => {
-    //     // setCourseList(courseList.map((course) => {
-    //     //     return course.selected = selectAll;
-    //     // }))
-    //     // setCourseList(courseList.map(course))
-    //
-    //     // setEntryForm({...entryForm, globalSelectState: !selectAll})
-    //     const courseListCopy = courseList.map((course)=>{
-    //         return {...course, selected: selectAll}
-    //     })
-    //     setCourseList(courseListCopy)
-    //     setSelectAll(!selectAll);
-    // }
-
 
     const handleJSONExport = () => {
         if(courseList.length === 0) {
@@ -60,7 +44,7 @@ const EntryForm = ({courseList, setCourseList,
 
     const handleAddCourseByPlus = () => {
         // verify collected data is valid
-        if(entryForm.cid === '') {
+        if (entryForm.cid === '') {
             setEntryForm({...entryForm, console: ""});
             return;
         }
@@ -87,17 +71,11 @@ const EntryForm = ({courseList, setCourseList,
         setDisablePlanButton(false);
     }
 
-
-
     const hiddenFileInput = React.useRef(null);
 
     const handleUpload = () => {
         hiddenFileInput.current.click();
     }
-
-    // function updatecourseListFromString(rawcourseList) {
-    //
-    // }
 
     const handleUrlUploadByEnter = (event) => {
         if (event.key !== 'Enter') return;
@@ -157,15 +135,6 @@ const EntryForm = ({courseList, setCourseList,
         }
     }
 
-    // const toggleSystem = () => {
-    //     setCoursePlan("")
-    //     setEntryForm({...entryForm, useQuarterSystem: !entryForm.useQuarterSystem})
-    // }
-
-    const toggleSummer = () => {
-        setEntryForm({...entryForm, useSummer: !entryForm.useSummer})
-    }
-
     return (
         <div className={'dbg-border'}>
             <div className={'simple-style'}>
@@ -198,10 +167,6 @@ const EntryForm = ({courseList, setCourseList,
             <div className={'vskip-5px'}/>
             <div className={'simple-style'}>
                 <div className={'btn-group'}>
-                    {/*<button className={'icon-btn outer-btn red-btn'} onClick={incompleteImplementation}*/}
-                    {/*        title={'De/select all courses'}>*/}
-                    {/*    <span className="material-symbols-outlined">checklist</span>*/}
-                    {/*</button>*/}
                     <button className={'icon-btn outer-btn'} onClick={handleScramble}
                             title={'Scramble courses'}>
                         <span className="material-symbols-outlined">format_align_center</span>

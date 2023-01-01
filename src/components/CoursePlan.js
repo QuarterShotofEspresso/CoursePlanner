@@ -9,14 +9,6 @@ const CoursePlan = ({entryForm, setEntryForm, coursePlan, setCoursePlan}) => {
     const [enableSpring, setEnableSpring] = useState(false)
     const [enableSummer, setEnableSummer] = useState(false)
 
-    function renderSummerTerm() {
-        if (entryForm.useSummer) {
-            return <th style={{backgroundColor: "lightgray", color: "gray"}}>U</th>
-        } else {
-            return <th>U</th>
-        }
-    }
-
     return (
         <div className={'table'}>
             <table className={"course-table"} border={'1'}>
@@ -24,10 +16,10 @@ const CoursePlan = ({entryForm, setEntryForm, coursePlan, setCoursePlan}) => {
                 <thead>
                     <tr>
                         <th>Year</th>
-                        <th className={(enableFall) ? "selected-term" : "unselected-term"} onClick={() => setEnableFall(!enableFall)}>F</th>
-                        <th className={(enableWinter) ? "selected-term" : "unselected-term"} onClick={() => setEnableWinter(!enableWinter)}>W</th>
-                        <th className={(enableSpring) ? "selected-term" : "unselected-term"} onClick={() => setEnableSpring(!enableSpring)}>S</th>
-                        <th className={(enableSummer) ? "selected-term" : "unselected-term"} onClick={() => setEnableSummer(!enableSummer)}>U</th>
+                        <th className={(enableFall) ? "selected-term-header" : "unselected-term-header"} onClick={() => setEnableFall(!enableFall)}>F</th>
+                        <th className={(enableWinter) ? "selected-term-header" : "unselected-term-header"} onClick={() => setEnableWinter(!enableWinter)}>W</th>
+                        <th className={(enableSpring) ? "selected-term-header" : "unselected-term-header"} onClick={() => setEnableSpring(!enableSpring)}>S</th>
+                        <th className={(enableSummer) ? "selected-term-header" : "unselected-term-header"} onClick={() => setEnableSummer(!enableSummer)}>U</th>
                     </tr>
                 </thead>
                 <tbody dangerouslySetInnerHTML={{__html: coursePlan}}/>

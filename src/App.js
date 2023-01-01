@@ -3,7 +3,7 @@ import CourseList from './components/CourseList'
 import EntryForm from './components/EntryForm'
 import CoursePlan from './components/CoursePlan'
 import {useState} from "react";
-import {createCourse} from "./components/cputil";
+// import {createCourse} from "./components/cputil";
 
 function App() {
 

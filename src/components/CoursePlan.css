@@ -1,19 +1,31 @@
-.selected-term {
+.selected-term-header {
     background-color: lightgray;
     color: gray;
 }
 
-.selected-term:hover {
+.selected-term-header:hover {
     background-color: lightgray;
     color: gray;
 }
 
-.unselected-term {
+.unselected-term-header {
     background-color: white;
     color: black;
 }
 
-.unselected-term:hover {
+.unselected-term-header:hover {
     background-color: lightgray;
     color: black;
 }
+
+
+.unselected-term-data {
+    background-color: white;
+    color: black;
+}
+
+.unselected-term-data:hover {
+    background-color: lightblue;
+    color: black;
+}
+
