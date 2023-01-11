@@ -1,70 +1,13 @@
-# Getting Started with Create React App
+# OSCP: Open Source Course Planner
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introduction
+Writing a course plan can be a tedious process. Balancing just two factors like prerequisites and course offerings for only ten courses can become a headache. And some of us like to factor in the difficulty of each course to make sure we’re not overwhelmed/underperforming for a one-off term. What’s worse is when a carefully developed course plan fails to hold (due to limited seat availability/the school changing when a course is offered/or even a small error while drafting your plan) which means more time spent to rework your plan. OSCP or Open Source Course Planner is a universal course planing utility aimed at (college) students that want to avoid the hassle of developing a course plan. By universal, we mean this course planner should (theoretically) work for any university. We make this claim by observing that colleges use the following two metrics for determining how courses progress: prerequisites and course offerings. Some universities use additional metrics like corequisites and consecutive courses. OSCP provides tools for each of the above metrics and more. This article discusses how to utilize these tools in order to automate as much of your course planning process as possible.
 
-## Available Scripts
+> OSCP is not a course planner in the one-term sense; i.e. it does not plan courses for one term--checking for time conflicts, seat availability, etc. Many universities already offer their own course planning utility for such purposes. OSCP is a course planner which, given a list of courses, their prerequisites, when they're offered, and the difficulty can compile an n-year course plan.
 
-In the project directory, you can run:
+### [Launch OSCP](https://quartershotofespresso.github.io/CoursePlanner/)
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Upcoming Changes...
+##### Course Plan Generator
+##### UI
+##### Course List

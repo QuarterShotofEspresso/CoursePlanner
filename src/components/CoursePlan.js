@@ -22,7 +22,8 @@ const CoursePlan = ({entryForm, setEntryForm, coursePlan, setCoursePlan}) => {
                         <th className={(enableSummer) ? "selected-term-header" : "unselected-term-header"} onClick={() => setEnableSummer(!enableSummer)}>U</th>
                     </tr>
                 </thead>
-                <tbody dangerouslySetInnerHTML={{__html: coursePlan}}/>
+                {/*<tbody dangerouslySetInnerHTML={{__html: coursePlan}}/>*/}
+                <tbody>{coursePlan}</tbody>
             </table>
         </div>
     )

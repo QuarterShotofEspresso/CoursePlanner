@@ -18,14 +18,3 @@
     color: black;
 }
 
-
-.unselected-term-data {
-    background-color: white;
-    color: black;
-}
-
-.unselected-term-data:hover {
-    background-color: lightblue;
-    color: black;
-}
-

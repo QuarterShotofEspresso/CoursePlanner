@@ -23,11 +23,15 @@ function App() {
 
     return (
         <div className="App">
-            <div className={'vskip-50px'}/>
+            <div className={'vskip-10px'}/>
+            <div className={'titleDiv'}><h2>Open Source Course Planner</h2></div>
+            {/*<div className={'vskip-5px'}/>*/}
             <div className={'dbg-border tut-msg'}>
                 <a href={"https://raw.githubusercontent.com/QuarterShotofEspresso/CoursePlanner/master/sample_courselist/samplea.json"}
-                   target="_blank" rel="noopener noreferrer">Click on me. Copy the URL. Paste it below. Press Return</a><br/>
+                   target="_blank" rel="noopener noreferrer">Sample Course List</a><br/>
             </div>
+            <div className={'vskip-20px'}/>
+            <hr/>
             <div className={'vskip-20px'}/>
             <EntryForm courseList={courseList} setCourseList={setCourseList}
                        entryForm={entryForm} setEntryForm={setEntryForm}

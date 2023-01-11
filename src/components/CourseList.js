@@ -71,7 +71,7 @@ const CourseList = ({courseList, setCourseList, entryForm, setEntryForm}) => {
     // TODO: Test if these functions work
     const beginDraggingSelect = (event) => {
         // log the transitioned drag
-        event.preventDefault()
+        // event.preventDefault()
         // identify the clicked row
         const selectedRowIdx = event.target.parentNode.rowIndex - 1
 
@@ -103,7 +103,11 @@ const CourseList = ({courseList, setCourseList, entryForm, setEntryForm}) => {
     return (
         <div>
             <table className={"course-table"} border={'1'}>
-                <caption>Course List</caption>
+                <caption>
+                    <div className={'courseList-caption'}>
+                        Course List <div className={'course-count'}>({courseList.length} courses)</div>
+                    </div>
+                </caption>
                 <thead>
                     <tr>
                         <th>ID</th>

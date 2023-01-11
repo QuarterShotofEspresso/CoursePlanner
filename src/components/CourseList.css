@@ -12,6 +12,11 @@ tbody{
 
 .default-row {
     background-color: white;
+    /*prevent text selection*/
+    -moz-user-select:none; /* firefox */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE*/
+    user-select: none; /* Standard syntax */
 }
 
 .default-row:hover {
@@ -24,9 +29,24 @@ tbody{
 
 .selected-row {
     background-color: deepskyblue;
-    /*color: white;*/
+    /*prevent text selection*/
+    -moz-user-select:none; /* firefox */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE*/
+    user-select: none; /* Standard syntax */
 }
 
+.course-count {
+    font-family: "Courier New", serif;
+    font-weight: normal;
+    margin-left: 10px;
+}
+
+.courseList-caption {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 
 
 .prereq-td{

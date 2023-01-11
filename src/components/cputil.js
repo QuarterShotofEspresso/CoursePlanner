@@ -1,3 +1,5 @@
+import TermTile from "./TermTile";
+
 const Course = {
     // Course Data
     cid: '',
@@ -8,28 +10,17 @@ const Course = {
     selected: false,
     // Planner Data
     preqsAdded: 0,
-    // object methods
-    // NOTE: asString and asCourse methods will NEVER be implmentetd because daata will be saved in JSON format
-    // asString: () => {return this.cid + ";" + " ".join(this.preq) + ";" + this.offr + ";" + this.load;},
-    // asCourse: (courseString) => {return util.createCourseFromString(courseString)}
-    // toggleSelection: function() {
-    //     this.selected = ~this.selected
-    //     return this.selected
-    // },
-    // getSelectionColor: function() {
-    //     return (this.selected === 2) ? 'lightgray' : (this.selected === 1) ? 'lightblue' : 'white';
-    // },
-    encodeOfferingsAsNumbers: function() {
-        const encodedOfferings = []
-        if (this.offr.includes('F')) encodedOfferings.push(0)
-        if (this.offr.includes('W')) encodedOfferings.push(1)
-        if (this.offr.includes('S')) encodedOfferings.push(2)
-        if (this.offr.includes('U')) encodedOfferings.push(3)
-
-        return encodedOfferings
-    }
 }
 
+function encodeOfferingsAsNumbers(course) {
+    const encodedOfferings = []
+    if (course.offr.includes('F')) encodedOfferings.push(0)
+    if (course.offr.includes('W')) encodedOfferings.push(1)
+    if (course.offr.includes('S')) encodedOfferings.push(2)
+    if (course.offr.includes('U')) encodedOfferings.push(3)
+
+    return encodedOfferings
+}
 
 export function createCourseFromString(cid, preq='', offr='', load='') {
     let newCourse = Object.create(Course)
@@ -117,37 +108,53 @@ const CoursePlanner = {
     },
 
     convertToTable: function() {
+
         if (this.quarters.length === 0) {
             return null
         }
 
         // concatenate all course IDs with <br> tag
-        for (let idx in this.quarters) {
-            this.quarters[idx].courses = this.quarters[idx].courses.join('<br/>')
-        }
+        // for (let idx in this.quarters) {
+        //     this.quarters[idx].courses = this.quarters[idx].courses.join('<br/>')
+        // }
+
         // split this.quarters into lists of 4 consecutive
         // quarters, or 'years'
+        // let years = [], i = 0, n = this.quarters.length;
         let years = [], i = 0, n = this.quarters.length;
         while (i < n) {
-            years.push(this.quarters.slice(i, i += this.calcTotalUsableTerms()))
+            // years.push(this.quarters.slice(i, i += this.calcTotalUsableTerms()))
+            years.push(this.quarters.slice(i, i += 4))
         }
 
-        years = years.map((year) => {
-            return (year.map((qrt) => {return qrt.courses}))
+
+        // years = years.map(year => year.map(qrt => <TermTile content={qrt.courses}/>))
+
+        // map the list of quarters to a table format for Course Plan
+        return years.map((year, index) => {
+            return <tr><td>{index+1}</td>{year.map(qrt => <TermTile content={qrt.courses}/>)}</tr>
         })
 
         // join year arrs together with </td><td> tags
-        for (let idx in years) {
-            years[idx] = years[idx].join('</td><td>')
-        }
+        // for (let idx in years) {
+        //     years[idx] = years[idx].join('</td><td>')
+        // }
 
         // pad each year with <tr><td>yearIdx</td><td>{year data}</td></tr>
-        for (let idx in years) {
-            years[idx] = '<tr><td>' + idx + '</td><td>' + years[idx] + '</td></tr>'
-        }
+        // for (let idx in years) {
+        //     years[idx] = '<tr><td>' + idx + '</td><td>' + years[idx] + '</td></tr>'
+        // }
+
+        // for (let idx in years) {
+        //     let yearNumber = parseInt(idx)+1
+        //     years[idx] = <tr><td>{yearNumber}</td>{years[idx]}</tr>
+        // }
 
         // join all years as the final html table
-        return years.join('')
+        // return years.join('')
+        // return years.map((year, index) => {
+        //     return <tr><td>{index + 1}</td>{year}</tr>
+        // })
     },
 
     sortByPreq: function (unsortedCourses) {
@@ -211,7 +218,8 @@ const CoursePlanner = {
 
                 // only if the course is offered in the quarter can the course be added this quarter
                 // check if the course is offered in the quarter
-                let courseIsOfferedInQuarter = courseToAdd.encodeOfferingsAsNumbers().includes(qtrIdx % this.calcTotalUsableTerms())
+                // let courseIsOfferedInQuarter = encodeOfferingsAsNumbers(courseToAdd).includes(qtrIdx % this.calcTotalUsableTerms())
+                let courseIsOfferedInQuarter = encodeOfferingsAsNumbers(courseToAdd).includes(qtrIdx % 4)
 
                 if (!haveAllPreqsBeenAdded) {
                     // check to see if any preqs are offered in the quarter

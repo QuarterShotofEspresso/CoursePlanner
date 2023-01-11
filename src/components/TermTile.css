@@ -1,0 +1,10 @@
+
+.unselected-term-tile {
+    background-color: white;
+    color: black;
+}
+
+.unselected-term-tile:hover {
+    background-color: lightblue;
+    color: black;
+}
