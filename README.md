@@ -8,10 +8,15 @@ Writing a course plan can be a tedious process. Balancing just two factors like 
 ### [Launch OSCP](https://quartershotofespresso.github.io/CoursePlanner/)
 > OSCP is being developed in Chrome. Better support/UI for other browsers is planned upon completion of the tool...
 
+## Recent Updates...
+- Implement add/remove functionality for Year +/- buttons.
+- Course Counter on Course List.
+- TermTiles (Course Plan is now editable).
+
 ## Upcoming Bug Fixes...
+- Last generated year in course plan has an un-editable TermTile.
 
 ## Upcoming Features/Under development...
-- Implement add/remove functionality for Year +/- buttons.
 - Add Course List searchability to Course Entry forms.
 - Change `Scramble Course List` icon to something more indicative of scrambling.
 - Add functionality to toggle quarter availability/gray-ing out quarters.
