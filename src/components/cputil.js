@@ -113,11 +113,6 @@ const CoursePlanner = {
             return null
         }
 
-        // concatenate all course IDs with <br> tag
-        // for (let idx in this.quarters) {
-        //     this.quarters[idx].courses = this.quarters[idx].courses.join('<br/>')
-        // }
-
         // split this.quarters into lists of 4 consecutive
         // quarters, or 'years'
         // let years = [], i = 0, n = this.quarters.length;
@@ -127,34 +122,10 @@ const CoursePlanner = {
             years.push(this.quarters.slice(i, i += 4))
         }
 
-
-        // years = years.map(year => year.map(qrt => <TermTile content={qrt.courses}/>))
-
         // map the list of quarters to a table format for Course Plan
         return years.map((year, index) => {
             return <tr><td>{index+1}</td>{year.map(qrt => <TermTile content={qrt.courses}/>)}</tr>
         })
-
-        // join year arrs together with </td><td> tags
-        // for (let idx in years) {
-        //     years[idx] = years[idx].join('</td><td>')
-        // }
-
-        // pad each year with <tr><td>yearIdx</td><td>{year data}</td></tr>
-        // for (let idx in years) {
-        //     years[idx] = '<tr><td>' + idx + '</td><td>' + years[idx] + '</td></tr>'
-        // }
-
-        // for (let idx in years) {
-        //     let yearNumber = parseInt(idx)+1
-        //     years[idx] = <tr><td>{yearNumber}</td>{years[idx]}</tr>
-        // }
-
-        // join all years as the final html table
-        // return years.join('')
-        // return years.map((year, index) => {
-        //     return <tr><td>{index + 1}</td>{year}</tr>
-        // })
     },
 
     sortByPreq: function (unsortedCourses) {

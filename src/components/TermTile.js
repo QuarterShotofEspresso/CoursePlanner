@@ -1,20 +1,23 @@
 import './TermTile.css'
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 
 const TermTile = ({content}) => {
     const [enableFreeEntry, setEnableFreeEntry] = useState(false)
-    const [tileContent, setTileContent] = useState(content)
+    const [tileContent, setTileContent] = useState(content.join('\n'))
+    // const refTileContent = useRef(content.join('\n'))
 
     function renderTile() {
         if (enableFreeEntry) {
             return <>
-                <textarea rows={4} cols={10} value={tileContent.join("\n")}
+                <textarea rows={4} cols={10} value={tileContent}
                           onChange={e => setTileContent(e.target.value)}
                           onClick={e => e.stopPropagation()}
                 />
             </>
         } else {
-            return (tileContent.length > 0) ? tileContent.reduce((result, course) => <>{result}<br/>{course}</>) : null
+            if (tileContent.length === 0) return null
+            const intermTileCont = tileContent.split('\n')
+            return intermTileCont.reduce((result, course) => <>{result}<br/>{course}</>)
         }
     }
 

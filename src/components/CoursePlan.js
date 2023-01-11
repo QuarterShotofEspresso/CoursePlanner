@@ -15,7 +15,13 @@ const CoursePlan = ({entryForm, setEntryForm, coursePlan, setCoursePlan}) => {
                 <caption>Course Plan</caption>
                 <thead>
                     <tr>
-                        <th>Year</th>
+                        <th>
+                            <div className={'coursePlan-year-header'}>
+                                <button>+</button>
+                                Year
+                                <button>-</button>
+                            </div>
+                        </th>
                         <th className={(enableFall) ? "selected-term-header" : "unselected-term-header"} onClick={() => setEnableFall(!enableFall)}>F</th>
                         <th className={(enableWinter) ? "selected-term-header" : "unselected-term-header"} onClick={() => setEnableWinter(!enableWinter)}>W</th>
                         <th className={(enableSpring) ? "selected-term-header" : "unselected-term-header"} onClick={() => setEnableSpring(!enableSpring)}>S</th>
