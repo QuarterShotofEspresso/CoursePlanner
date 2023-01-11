@@ -29,6 +29,7 @@ function App() {
             <div className={'dbg-border tut-msg'}>
                 <a href={"https://raw.githubusercontent.com/QuarterShotofEspresso/CoursePlanner/master/sample_courselist/samplea.json"}
                    target="_blank" rel="noopener noreferrer">Sample Course List</a><br/>
+                {/*<button>Tutorial</button>*/}
             </div>
             <div className={'vskip-20px'}/>
             <hr/>

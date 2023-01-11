@@ -1,6 +1,7 @@
 // import './EntryForm.css';
 import {useEffect, useState} from "react";
 import './CoursePlan.css'
+import TermTile from "./TermTile";
 
 const CoursePlan = ({entryForm, setEntryForm, coursePlan, setCoursePlan}) => {
 
@@ -8,6 +9,26 @@ const CoursePlan = ({entryForm, setEntryForm, coursePlan, setCoursePlan}) => {
     const [enableWinter, setEnableWinter] = useState(false)
     const [enableSpring, setEnableSpring] = useState(false)
     const [enableSummer, setEnableSummer] = useState(false)
+
+    const addYear = () => {
+        setCoursePlan(coursePlan => [...coursePlan,
+            <tr>
+                <td>{coursePlan.length+1}</td>
+                <TermTile content={[]}/>
+                <TermTile content={[]}/>
+                <TermTile content={[]}/>
+                <TermTile content={[]}/>
+            </tr>
+        ])
+    }
+
+    const removeYear = () => {
+        setCoursePlan(coursePlan => {
+            const coursePlanCopy = [...coursePlan]
+            coursePlanCopy.pop()
+            return coursePlanCopy
+        })
+    }
 
     return (
         <div className={'table'}>
@@ -17,9 +38,9 @@ const CoursePlan = ({entryForm, setEntryForm, coursePlan, setCoursePlan}) => {
                     <tr>
                         <th>
                             <div className={'coursePlan-year-header'}>
-                                <button>+</button>
+                                <button onClick={addYear}>+</button>
                                 Year
-                                <button>-</button>
+                                <button onClick={removeYear}>-</button>
                             </div>
                         </th>
                         <th className={(enableFall) ? "selected-term-header" : "unselected-term-header"} onClick={() => setEnableFall(!enableFall)}>F</th>
@@ -28,7 +49,6 @@ const CoursePlan = ({entryForm, setEntryForm, coursePlan, setCoursePlan}) => {
                         <th className={(enableSummer) ? "selected-term-header" : "unselected-term-header"} onClick={() => setEnableSummer(!enableSummer)}>U</th>
                     </tr>
                 </thead>
-                {/*<tbody dangerouslySetInnerHTML={{__html: coursePlan}}/>*/}
                 <tbody>{coursePlan}</tbody>
             </table>
         </div>
