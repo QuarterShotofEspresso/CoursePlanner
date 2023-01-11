@@ -20,3 +20,5 @@ Writing a course plan can be a tedious process. Balancing just two factors like 
 - Tweaking availability of specific quarters.
 - Interactive Tutorial
 - Light Reference Document
+- Disabling Courses in Course List
+- Consecutive Courses
