@@ -110,17 +110,51 @@ const CoursePlanner = {
     convertToTable: function() {
 
         if (this.quarters.length === 0) {
-            return null
+            return []
         }
+
+        // const addYear = () => {
+        //     setCoursePlan(coursePlan => [...coursePlan,
+        //         <tr>
+        //             <td>{coursePlan.length+1}</td>
+        //             <TermTile content={[]}/>
+        //             <TermTile content={[]}/>
+        //             <TermTile content={[]}/>
+        //             <TermTile content={[]}/>
+        //         </tr>
+        //     ])
+        // }
+        //
+        // const removeYear = () => {
+        //     setCoursePlan(coursePlan => {
+        //         const coursePlanCopy = [...coursePlan]
+        //         coursePlanCopy.pop()
+        //         return coursePlanCopy
+        //     })
+        // }
 
         // split this.quarters into lists of 4 consecutive
         // quarters, or 'years'
-        // let years = [], i = 0, n = this.quarters.length;
         let years = [], i = 0, n = this.quarters.length;
-        while (i < n) {
-            // years.push(this.quarters.slice(i, i += this.calcTotalUsableTerms()))
-            years.push(this.quarters.slice(i, i += 4))
+        if (this.calcTotalUsableTerms() === 3) {
+            while (i < n) {
+                years.push(this.quarters.slice(i, i += 3))
+                console.log(years)
+            }
+        } else {
+            while (i < n) {
+                years.push(this.quarters.slice(i, i += 4))
+            }
         }
+        // while (i < n) {
+        //     if (this.calcTotalUsableTerms() === 3) {
+        //         years.push(this.quarters.slice(i, i += 3))
+        //     } else {
+        //         years.push(this.quarters.slice(i, i += 4))
+        //     }
+        //     // years.push(this.quarters.slice(i, i += this.calcTotalUsableTerms()))
+        //     // years.push(this.quarters.slice(i, i += 4))
+        // }
 
         // map the list of quarters to a table format for Course Plan
         return years.map((year, index) => {
@@ -189,8 +223,8 @@ const CoursePlanner = {
 
                 // only if the course is offered in the quarter can the course be added this quarter
                 // check if the course is offered in the quarter
-                // let courseIsOfferedInQuarter = encodeOfferingsAsNumbers(courseToAdd).includes(qtrIdx % this.calcTotalUsableTerms())
-                let courseIsOfferedInQuarter = encodeOfferingsAsNumbers(courseToAdd).includes(qtrIdx % 4)
+                let courseIsOfferedInQuarter = encodeOfferingsAsNumbers(courseToAdd).includes(qtrIdx % this.calcTotalUsableTerms())
+                // let courseIsOfferedInQuarter = encodeOfferingsAsNumbers(courseToAdd).includes(qtrIdx % 4)
 
                 if (!haveAllPreqsBeenAdded) {
                     // check to see if any preqs are offered in the quarter
